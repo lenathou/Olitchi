@@ -2,120 +2,120 @@
 @import "tw-animate-css";
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--font-sans: var(--font-geist-sans);
+	--font-mono: var(--font-geist-mono);
+	--color-sidebar-ring: var(--sidebar-ring);
+	--color-sidebar-border: var(--sidebar-border);
+	--color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+	--color-sidebar-accent: var(--sidebar-accent);
+	--color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+	--color-sidebar-primary: var(--sidebar-primary);
+	--color-sidebar-foreground: var(--sidebar-foreground);
+	--color-sidebar: var(--sidebar);
+	--color-chart-5: var(--chart-5);
+	--color-chart-4: var(--chart-4);
+	--color-chart-3: var(--chart-3);
+	--color-chart-2: var(--chart-2);
+	--color-chart-1: var(--chart-1);
+	--color-ring: var(--ring);
+	--color-input: var(--input);
+	--color-border: var(--border);
+	--color-destructive: var(--destructive);
+	--color-accent-foreground: var(--accent-foreground);
+	--color-accent: var(--accent);
+	--color-muted-foreground: var(--muted-foreground);
+	--color-muted: var(--muted);
+	--color-secondary-foreground: var(--secondary-foreground);
+	--color-secondary: var(--secondary);
+	--color-primary-foreground: var(--primary-foreground);
+	--color-primary: var(--primary);
+	--color-popover-foreground: var(--popover-foreground);
+	--color-popover: var(--popover);
+	--color-card-foreground: var(--card-foreground);
+	--color-card: var(--card);
+	--radius-sm: calc(var(--radius) - 4px);
+	--radius-md: calc(var(--radius) - 2px);
+	--radius-lg: var(--radius);
+	--radius-xl: calc(var(--radius) + 4px);
 }
 
-/* Palette Olitchy91 - Inspirée de l'image tropicale */
+/* Palette olitchi91 - Inspirée de l'image tropicale */
 :root {
-  /* Rayons de bordure */
-  --radius: 0.75rem;
-  
-  /* Couleurs principales - Orange vibrant du logo */
-  --primary: #FF6B35; /* Orange principal du logo */
-  --primary-foreground: #FFFFFF;
-  
-  /* Couleurs secondaires - Bleu du ciel */
-  --secondary: #4A90E2; /* Bleu ciel de l'image */
-  --secondary-foreground: #FFFFFF;
-  
-  /* Couleurs d'accent - Vert des palmiers */
-  --accent: #2E8B57; /* Vert des palmiers */
-  --accent-foreground: #FFFFFF;
-  
-  /* Couleurs de fond */
-  --background: #FEFEFE; /* Blanc cassé chaleureux */
-  --foreground: #2C3E50; /* Bleu-gris foncé pour le texte */
-  
-  /* Couleurs des cartes */
-  --card: #FFFFFF;
-  --card-foreground: #2C3E50;
-  
-  /* Couleurs des popovers */
-  --popover: #FFFFFF;
-  --popover-foreground: #2C3E50;
-  
-  /* Couleurs atténuées */
-  --muted: #F8F9FA; /* Gris très clair */
-  --muted-foreground: #6C757D; /* Gris moyen */
-  
-  /* Couleurs destructives - Rouge corail */
-  --destructive: #E74C3C; /* Rouge corail */
-  --destructive-foreground: #FFFFFF;
-  
-  /* Bordures et inputs */
-  --border: #E9ECEF; /* Gris clair pour les bordures */
-  --input: #F8F9FA; /* Fond des inputs */
-  --ring: #FF6B35; /* Orange pour le focus */
-  
-  /* Couleurs des graphiques - Palette tropicale étendue */
-  --chart-1: #FF6B35; /* Orange principal */
-  --chart-2: #4A90E2; /* Bleu ciel */
-  --chart-3: #2E8B57; /* Vert palmier */
-  --chart-4: #FFD700; /* Jaune soleil */
-  --chart-5: #FF8C69; /* Orange saumon */
-  
-  /* Couleurs de la sidebar */
-  --sidebar: #FFFFFF;
-  --sidebar-foreground: #2C3E50;
-  --sidebar-primary: #FF6B35;
-  --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #F8F9FA;
-  --sidebar-accent-foreground: #2C3E50;
-  --sidebar-border: #E9ECEF;
-  --sidebar-ring: #FF6B35;
-  
-  /* Couleurs personnalisées Olitchy91 */
-  --tropical-orange: #FF6B35;
-  --tropical-blue: #4A90E2;
-  --tropical-green: #2E8B57;
-  --sand-beige: #F5E6D3;
-  --sunset-coral: #FF8C69;
-  --ocean-teal: #20B2AA;
-  --palm-dark: #1B4332;
-  --sunshine-yellow: #FFD700;
+	/* Rayons de bordure */
+	--radius: 0.75rem;
+
+	/* Couleurs principales - Orange vibrant du logo */
+	--primary: #ff6b35; /* Orange principal du logo */
+	--primary-foreground: #ffffff;
+
+	/* Couleurs secondaires - Bleu du ciel */
+	--secondary: #4a90e2; /* Bleu ciel de l'image */
+	--secondary-foreground: #ffffff;
+
+	/* Couleurs d'accent - Vert des palmiers */
+	--accent: #2e8b57; /* Vert des palmiers */
+	--accent-foreground: #ffffff;
+
+	/* Couleurs de fond */
+	--background: #fefefe; /* Blanc cassé chaleureux */
+	--foreground: #2c3e50; /* Bleu-gris foncé pour le texte */
+
+	/* Couleurs des cartes */
+	--card: #ffffff;
+	--card-foreground: #2c3e50;
+
+	/* Couleurs des popovers */
+	--popover: #ffffff;
+	--popover-foreground: #2c3e50;
+
+	/* Couleurs atténuées */
+	--muted: #f8f9fa; /* Gris très clair */
+	--muted-foreground: #6c757d; /* Gris moyen */
+
+	/* Couleurs destructives - Rouge corail */
+	--destructive: #e74c3c; /* Rouge corail */
+	--destructive-foreground: #ffffff;
+
+	/* Bordures et inputs */
+	--border: #e9ecef; /* Gris clair pour les bordures */
+	--input: #f8f9fa; /* Fond des inputs */
+	--ring: #ff6b35; /* Orange pour le focus */
+
+	/* Couleurs des graphiques - Palette tropicale étendue */
+	--chart-1: #ff6b35; /* Orange principal */
+	--chart-2: #4a90e2; /* Bleu ciel */
+	--chart-3: #2e8b57; /* Vert palmier */
+	--chart-4: #ffd700; /* Jaune soleil */
+	--chart-5: #ff8c69; /* Orange saumon */
+
+	/* Couleurs de la sidebar */
+	--sidebar: #ffffff;
+	--sidebar-foreground: #2c3e50;
+	--sidebar-primary: #ff6b35;
+	--sidebar-primary-foreground: #ffffff;
+	--sidebar-accent: #f8f9fa;
+	--sidebar-accent-foreground: #2c3e50;
+	--sidebar-border: #e9ecef;
+	--sidebar-ring: #ff6b35;
+
+	/* Couleurs personnalisées olitchi91 */
+	--tropical-orange: #ff6b35;
+	--tropical-blue: #4a90e2;
+	--tropical-green: #2e8b57;
+	--sand-beige: #f5e6d3;
+	--sunset-coral: #ff8c69;
+	--ocean-teal: #20b2aa;
+	--palm-dark: #1b4332;
+	--sunshine-yellow: #ffd700;
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
+	* {
+		@apply border-border outline-ring/50;
+	}
+	body {
+		@apply bg-background text-foreground;
+	}
 }
