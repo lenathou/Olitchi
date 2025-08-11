@@ -12,13 +12,15 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Truck, Menu, MapPin, Clock, Phone, Star } from "lucide-react";
 import Link from "next/link";
+import { mainNavigation } from "@/constants/navigation";
 
-const navigationItems = [
-	{ href: "/menu", label: "Menu", icon: Star },
-	{ href: "/a-propos", label: "À propos", icon: Truck },
-	{ href: "/localisation-horaires", label: "Localisation", icon: MapPin },
-	{ href: "/contact", label: "Contact", icon: Phone },
-];
+// Mapping des icônes pour chaque page
+const iconMap = {
+	'menu': Star,
+	'a-propos': Truck,
+	'localisation': MapPin,
+	'contact': Phone,
+} as const;
 
 export default function Header() {
 	const [isOpen, setIsOpen] = useState(false);
@@ -37,14 +39,14 @@ export default function Header() {
 
 				{/* Desktop Navigation */}
 				<div className="hidden md:flex space-x-6">
-					{navigationItems.map((item) => (
-						<a
+					{mainNavigation.filter(item => item.id !== 'accueil').map((item) => (
+						<Link
 							key={item.href}
 							href={item.href}
 							className="hover:text-primary transition-colors font-medium"
 						>
 							{item.label}
-						</a>
+						</Link>
 					))}
 				</div>
 
@@ -87,10 +89,10 @@ export default function Header() {
 										Navigation
 									</h3>
 									<nav className="space-y-2">
-										{navigationItems.map((item) => {
-											const Icon = item.icon;
+										{mainNavigation.filter(item => item.id !== 'accueil').map((item) => {
+											const Icon = iconMap[item.id as keyof typeof iconMap] || Star;
 											return (
-												<a
+												<Link
 													key={item.href}
 													href={item.href}
 													onClick={handleLinkClick}
@@ -98,7 +100,7 @@ export default function Header() {
 												>
 													<Icon className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
 													<span className="font-medium">{item.label}</span>
-												</a>
+												</Link>
 											);
 										})}
 									</nav>
