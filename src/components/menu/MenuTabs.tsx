@@ -11,7 +11,7 @@ function renderItem(item: {
   nom: string;
   description?: string;
   prix: number;
-  image: string;
+  image?: string;
 }) {
   return (
     <Card key={item.id}>
@@ -22,17 +22,19 @@ function renderItem(item: {
         </CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col items-center gap-4">
-        <Image
-          src={item.image}
-          alt={item.nom}
-          width={300}
-          height={200}
-          className="rounded-md object-cover w-full h-[200px]"
-        />
+        {item.image && (
+          <Image
+            src={item.image}
+            alt={item.nom}
+            width={300}
+            height={200}
+            className="rounded-md object-cover w-full h-[200px]"
+          />
+        )}
         {item.description && (
           <p className="text-muted-foreground text-center text-sm">{item.description}</p>
         )}
-        <Button className="w-full mt-2">Ajouter au panier</Button>
+        <Button className="w-full mt-2">Voir les détails</Button>
       </CardContent>
     </Card>
   );

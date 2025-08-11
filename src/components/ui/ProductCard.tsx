@@ -30,7 +30,7 @@ export function ProductCard({ id, nom, description, prix, image }: ProductCardPr
         {description && (
           <p className="text-muted-foreground text-center text-sm">{description}</p>
         )}
-        <Button className="w-full mt-2">Ajouter au panier</Button>
+        <Button className="w-full mt-2">Voir les détails</Button>
       </CardContent>
     </Card>
   );

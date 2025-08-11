@@ -28,7 +28,7 @@ export default function Header() {
 	};
 
 	return (
-		<header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
+			<header className="border-b border-white/10 bg-white/10 backdrop-blur-md supports-[backdrop-filter]:bg-white/5 fixed top-0 left-0 right-0 z-50 shadow-lg transition-all duration-300">
 			<nav className="container mx-auto px-4 py-4 flex items-center justify-between">
 				<Link href="/" className="flex items-center space-x-2">
 					<Truck className="h-8 w-8 text-primary" />
@@ -50,12 +50,22 @@ export default function Header() {
 
 				{/* Desktop CTA Button */}
 				<div className="hidden md:block">
-					<Button>Commander</Button>
+					<Button asChild>
+						<Link href="#location">
+							<MapPin className="w-4 h-4 mr-2" />
+							Nous Trouver
+						</Link>
+					</Button>
 				</div>
 
 				{/* Mobile Navigation */}
 				<div className="md:hidden flex items-center space-x-2">
-					<Button size="sm">Commander</Button>
+					<Button size="sm" asChild>
+						<Link href="#location">
+							<MapPin className="w-4 h-4 mr-1" />
+							Nous Trouver
+						</Link>
+					</Button>
 					<Sheet open={isOpen} onOpenChange={setIsOpen}>
 						<SheetTrigger asChild>
 							<Button variant="ghost" size="icon" className="md:hidden">
@@ -134,8 +144,12 @@ export default function Header() {
 										className="w-full"
 										size="lg"
 										onClick={handleLinkClick}
+										asChild
 									>
-										Commander maintenant
+										<Link href="#location">
+											<MapPin className="w-5 h-5 mr-2" />
+											Nous Trouver
+										</Link>
 									</Button>
 									<div className="flex space-x-2">
 										<Button variant="outline" size="sm" className="flex-1">

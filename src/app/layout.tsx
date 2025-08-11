@@ -92,7 +92,9 @@ export default function RootLayout({
 				<header>
 					<Header />
 				</header>
-				<main role="main">{children}</main>
+				<main role="main" className="">
+					{children}
+				</main>
 				<footer>
 					<Footer />
 				</footer>

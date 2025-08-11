@@ -1,4 +1,16 @@
-export const plats = {
+interface PlatBase {
+  id: string;
+  nom: string;
+  description: string;
+  prix: number;
+  image?: string;
+}
+
+export const plats: {
+  readonly bokits: readonly PlatBase[];
+  readonly grillades: readonly PlatBase[];
+  readonly autres: readonly PlatBase[];
+} = {
   bokits: [
     { 
       id: 'bokit-jf', 
@@ -61,4 +73,4 @@ export const plats = {
       image: '/images/plats/atieke-poisson.jpg',
     },
   ]
-};
+} as const;
