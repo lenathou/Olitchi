@@ -265,7 +265,7 @@ export default function AProposPage() {
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
-              <Link href="#location">
+              <Link href="/localisation-horaires">
                 <MapPin className="w-5 h-5 mr-2" />
                 Nous trouver
               </Link>

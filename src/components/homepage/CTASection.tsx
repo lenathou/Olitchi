@@ -72,7 +72,7 @@ export function CTASection({ className = '' }: CTASectionProps) {
               className="bg-primary hover:bg-primary/90 text-white px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 group"
               asChild
             >
-              <Link href="#location">
+              <Link href="/localisation">
                 <MapPin className="w-5 h-5 mr-2" />
                 Nous trouver maintenant
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />

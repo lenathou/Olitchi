@@ -7,6 +7,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { HelpCircle, MessageCircle, Phone, Clock, CreditCard, Users, ChefHat } from 'lucide-react';
 import Link from 'next/link';
 import { useIsMobile } from '@/lib/hooks';
+import { socialLinks } from '@/constants/navigation';
 
 interface FAQSectionProps {
   className?: string;
@@ -209,12 +210,12 @@ export function FAQSection({ className = '' }: FAQSectionProps) {
                 </p>
                 <div className="flex space-x-2">
                   <Button variant="outline" size="sm" className="flex-1" asChild>
-                    <Link href="#" target="_blank">
+                    <Link href={socialLinks.facebook.href} target="_blank">
                       Facebook
                     </Link>
                   </Button>
                   <Button variant="outline" size="sm" className="flex-1" asChild>
-                    <Link href="#" target="_blank">
+                    <Link href={socialLinks.instagram.href} target="_blank">
                       Instagram
                     </Link>
                   </Button>

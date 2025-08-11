@@ -15,9 +15,9 @@ import Link from "next/link";
 
 const navigationItems = [
 	{ href: "/menu", label: "Menu", icon: Star },
-	{ href: "#about", label: "À propos", icon: Truck },
-	{ href: "#location", label: "Localisation", icon: MapPin },
-	{ href: "#contact", label: "Contact", icon: Phone },
+	{ href: "/a-propos", label: "À propos", icon: Truck },
+	{ href: "/localisation-horaires", label: "Localisation", icon: MapPin },
+	{ href: "/contact", label: "Contact", icon: Phone },
 ];
 
 export default function Header() {
@@ -51,7 +51,7 @@ export default function Header() {
 				{/* Desktop CTA Button */}
 				<div className="hidden md:block">
 					<Button asChild>
-						<Link href="#location">
+						<Link href="/localisation-horaires">
 							<MapPin className="w-4 h-4 mr-2" />
 							Nous Trouver
 						</Link>
@@ -61,7 +61,7 @@ export default function Header() {
 				{/* Mobile Navigation */}
 				<div className="md:hidden flex items-center space-x-2">
 					<Button size="sm" asChild>
-						<Link href="#location">
+						<Link href="/localisation-horaires">
 							<MapPin className="w-4 h-4 mr-1" />
 							Nous Trouver
 						</Link>
@@ -141,12 +141,12 @@ export default function Header() {
 
 								<div className="space-y-4">
 									<Button
-										className="w-full"
+										variant="default"
 										size="lg"
 										onClick={handleLinkClick}
 										asChild
 									>
-										<Link href="#location">
+										<Link href="/localisation-horaires">
 											<MapPin className="w-5 h-5 mr-2" />
 											Nous Trouver
 										</Link>
