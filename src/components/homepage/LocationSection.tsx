@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { MapPin, Clock, Phone, Navigation, Calendar, Info } from 'lucide-react';
 import Link from 'next/link';
 import { useIsMobile } from '@/lib/hooks';
+import { SectionBadge } from '@/components/ui/section-badge';
 
 interface LocationSectionProps {
   className?: string;
@@ -20,7 +21,7 @@ const schedule = [
     isToday: false
   },
   {
-    day: 'Jeudi - Vendredi', 
+    day: 'Jeudi - Vendredi',
     location: 'Corbeil-Essonnes',
     hours: '11h30 - 14h30 & 18h00 - 22h00',
     isToday: false
@@ -64,27 +65,23 @@ export function LocationSection({ className = '' }: LocationSectionProps) {
   const isMobile = useIsMobile();
 
   return (
-    <section id="location" className={`py-16 lg:py-24 bg-background ${className}`}>
+    <section id="location" className={`py-16 lg:py-24 ${className}`}>
       <div className="container mx-auto px-4">
         {/* En-tête de section */}
         <div className="text-center mb-12 lg:mb-16">
-          <div className="inline-flex items-center bg-primary/10 text-primary rounded-full px-4 py-2 mb-4">
-            <MapPin className="w-4 h-4 mr-2" />
-            <span className="font-medium">Localisation</span>
-          </div>
+          <SectionBadge icon={MapPin} label="Localisation" />
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
             Où nous trouver
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Notre food truck se déplace dans toute l'Essonne pour vous apporter 
+            Notre food truck se déplace dans toute l'Essonne pour vous apporter
             nos saveurs authentiques au plus près de chez vous.
           </p>
         </div>
 
         {/* Contenu principal */}
-        <div className={`grid gap-8 lg:gap-12 ${
-          isMobile ? 'grid-cols-1' : 'grid-cols-1 lg:grid-cols-2'
-        }`}>
+        <div className={`grid gap-8 lg:gap-12 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 lg:grid-cols-2'
+          }`}>
           {/* Planning de la semaine */}
           <div className="space-y-6">
             <div className="flex items-center space-x-3 mb-6">
@@ -96,9 +93,8 @@ export function LocationSection({ className = '' }: LocationSectionProps) {
 
             <div className="space-y-4">
               {schedule.map((item, index) => (
-                <Card key={index} className={`transition-all duration-300 hover:shadow-lg ${
-                  item.isToday ? 'ring-2 ring-primary bg-primary/5' : 'hover:-translate-y-1'
-                }`}>
+                <Card key={index} className={`transition-all duration-300 hover:shadow-lg ${item.isToday ? 'ring-2 ring-primary bg-primary/5' : 'hover:-translate-y-1'
+                  }`}>
                   <CardContent className="p-6">
                     <div className="flex items-start justify-between">
                       <div className="space-y-2">
@@ -193,7 +189,7 @@ export function LocationSection({ className = '' }: LocationSectionProps) {
                     <div className="absolute bottom-8 left-12 w-7 h-7 bg-red-400 rounded-full animate-pulse delay-700" />
                     <div className="absolute bottom-4 right-4 w-5 h-5 bg-blue-400 rounded-full animate-pulse delay-1000" />
                   </div>
-                  
+
                   <div className="text-center z-10">
                     <MapPin className="w-12 h-12 text-primary mx-auto mb-3" />
                     <p className="text-lg font-semibold text-foreground mb-2">Essonne (91)</p>

@@ -2,120 +2,154 @@
 @import "tw-animate-css";
 
 @theme inline {
-	--color-background: var(--background);
-	--color-foreground: var(--foreground);
-	--font-sans: var(--font-geist-sans);
-	--font-mono: var(--font-geist-mono);
-	--color-sidebar-ring: var(--sidebar-ring);
-	--color-sidebar-border: var(--sidebar-border);
-	--color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-	--color-sidebar-accent: var(--sidebar-accent);
-	--color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-	--color-sidebar-primary: var(--sidebar-primary);
-	--color-sidebar-foreground: var(--sidebar-foreground);
-	--color-sidebar: var(--sidebar);
-	--color-chart-5: var(--chart-5);
-	--color-chart-4: var(--chart-4);
-	--color-chart-3: var(--chart-3);
-	--color-chart-2: var(--chart-2);
-	--color-chart-1: var(--chart-1);
-	--color-ring: var(--ring);
-	--color-input: var(--input);
-	--color-border: var(--border);
-	--color-destructive: var(--destructive);
-	--color-accent-foreground: var(--accent-foreground);
-	--color-accent: var(--accent);
-	--color-muted-foreground: var(--muted-foreground);
-	--color-muted: var(--muted);
-	--color-secondary-foreground: var(--secondary-foreground);
-	--color-secondary: var(--secondary);
-	--color-primary-foreground: var(--primary-foreground);
-	--color-primary: var(--primary);
-	--color-popover-foreground: var(--popover-foreground);
-	--color-popover: var(--popover);
-	--color-card-foreground: var(--card-foreground);
-	--color-card: var(--card);
-	--radius-sm: calc(var(--radius) - 4px);
-	--radius-md: calc(var(--radius) - 2px);
-	--radius-lg: var(--radius);
-	--radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-fraunces);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 }
 
 /* Palette olitchi91 - Inspirée de l'image tropicale */
+/* Palette Ô Litchy — Food Premium Minimal (papier + sable + orange chaud) */
 :root {
-	/* Rayons de bordure */
-	--radius: 0.75rem;
+  /* Rayons — boutons “pill” doux comme sur la hero */
+  --radius: 999px;
 
-	/* Couleurs principales - Orange vibrant du logo */
-	--primary: #ff6b35; /* Orange principal du logo */
-	--primary-foreground: #ffffff;
+  /* Background / Text — style “papier” premium */
+  --background: #f7f2ea;
+  /* papier chaud */
+  --foreground: #1f2a2e;
+  /* charbon doux (pas noir pur) */
 
-	/* Couleurs secondaires - Bleu du ciel */
-	--secondary: #4a90e2; /* Bleu ciel de l'image */
-	--secondary-foreground: #ffffff;
+  /* Surfaces */
+  --card: #fbf7f1;
+  /* papier légèrement plus clair */
+  --card-foreground: #1f2a2e;
 
-	/* Couleurs d'accent - Vert des palmiers */
-	--accent: #2e8b57; /* Vert des palmiers */
-	--accent-foreground: #ffffff;
+  --popover: #fbf7f1;
+  --popover-foreground: #1f2a2e;
 
-	/* Couleurs de fond */
-	--background: #fefefe; /* Blanc cassé chaleureux */
-	--foreground: #2c3e50; /* Bleu-gris foncé pour le texte */
+  /* Brand (Primary) — orange de la hero (CTA) */
+  --primary: #f07a2a;
+  /* orange chaud premium */
+  --primary-foreground: #ffffff;
 
-	/* Couleurs des cartes */
-	--card: #ffffff;
-	--card-foreground: #2c3e50;
+  /* Secondary — bouton crème de la hero */
+  --secondary: #f3e2cf;
+  /* crème/sable */
+  --secondary-foreground: #3a2b1f;
+  /* brun chaud lisible */
 
-	/* Couleurs des popovers */
-	--popover: #ffffff;
-	--popover-foreground: #2c3e50;
+  /* Muted — zones calmes (badges, small UI, chips) */
+  --muted: #efe6dc;
+  /* sable clair */
+  --muted-foreground: #6b625a;
+  /* taupe lisible */
 
-	/* Couleurs atténuées */
-	--muted: #f8f9fa; /* Gris très clair */
-	--muted-foreground: #6c757d; /* Gris moyen */
+  /* Accent — vert palmier (à utiliser peu) */
+  --accent: #2f6b4f;
+  /* palmier profond */
+  --accent-foreground: #ffffff;
 
-	/* Couleurs destructives - Rouge corail */
-	--destructive: #e74c3c; /* Rouge corail */
-	--destructive-foreground: #ffffff;
+  /* Destructive — rouge brique (cohérent avec palette chaude) */
+  --destructive: #d94b3d;
+  --destructive-foreground: #ffffff;
 
-	/* Bordures et inputs */
-	--border: #e9ecef; /* Gris clair pour les bordures */
-	--input: #f8f9fa; /* Fond des inputs */
-	--ring: #ff6b35; /* Orange pour le focus */
+  /* Borders / Inputs — sable subtil (pas gris froid) */
+  --border: #e6d6c6;
+  --input: #f6ede3;
+  /* input fond crème très léger */
+  --ring: #f07a2a;
+  /* focus orange */
 
-	/* Couleurs des graphiques - Palette tropicale étendue */
-	--chart-1: #ff6b35; /* Orange principal */
-	--chart-2: #4a90e2; /* Bleu ciel */
-	--chart-3: #2e8b57; /* Vert palmier */
-	--chart-4: #ffd700; /* Jaune soleil */
-	--chart-5: #ff8c69; /* Orange saumon */
+  /* Charts (si besoin) — harmonisés avec la marque */
+  --chart-1: #f07a2a;
+  /* orange */
+  --chart-2: #2f6b4f;
+  /* vert palmier */
+  --chart-3: #e9b84f;
+  /* soleil doux */
+  --chart-4: #c96a57;
+  /* corail brique */
+  --chart-5: #2f7b7a;
+  /* teal discret */
 
-	/* Couleurs de la sidebar */
-	--sidebar: #ffffff;
-	--sidebar-foreground: #2c3e50;
-	--sidebar-primary: #ff6b35;
-	--sidebar-primary-foreground: #ffffff;
-	--sidebar-accent: #f8f9fa;
-	--sidebar-accent-foreground: #2c3e50;
-	--sidebar-border: #e9ecef;
-	--sidebar-ring: #ff6b35;
+  /* Sidebar (si tu l’utilises) — neutre et premium */
+  --sidebar: #fbf7f1;
+  --sidebar-foreground: #1f2a2e;
+  --sidebar-primary: #f07a2a;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #efe6dc;
+  --sidebar-accent-foreground: #1f2a2e;
+  --sidebar-border: #e6d6c6;
+  --sidebar-ring: #f07a2a;
 
-	/* Couleurs personnalisées olitchi91 */
-	--tropical-orange: #ff6b35;
-	--tropical-blue: #4a90e2;
-	--tropical-green: #2e8b57;
-	--sand-beige: #f5e6d3;
-	--sunset-coral: #ff8c69;
-	--ocean-teal: #20b2aa;
-	--palm-dark: #1b4332;
-	--sunshine-yellow: #ffd700;
+  /* Tokens “projet” (facultatif mais pratique) */
+  --paper: #f7f2ea;
+  --paper-2: #fbf7f1;
+  --sand: #efe6dc;
+  --sand-2: #f3e2cf;
+  --brand-orange: #f07a2a;
+  --palm: #2f6b4f;
+  --ink: #1f2a2e;
+
+  /* Premium Buttons Gradients */
+  --premium-orange-start: #F58B3B;
+  --premium-orange-end: #E65C25;
+  --premium-beige-start: #FFFFFF;
+  --premium-beige-end: #F9EAD9;
+  --premium-beige-border: #EBCBA6;
 }
 
 @layer base {
-	* {
-		@apply border-border outline-ring/50;
-	}
-	body {
-		@apply bg-background text-foreground;
-	}
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+}
+
+/* Utilities for Premium Gradients */
+@utility bg-gradient-premium-orange {
+  background: linear-gradient(180deg, var(--premium-orange-start) 0%, var(--premium-orange-end) 100%);
+}
+
+@utility bg-gradient-premium-beige {
+  background: linear-gradient(180deg, var(--premium-beige-start) 0%, var(--premium-beige-end) 100%);
 }

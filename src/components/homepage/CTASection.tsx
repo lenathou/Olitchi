@@ -46,7 +46,7 @@ export function CTASection({ className = '' }: CTASectionProps) {
   const isMobile = useIsMobile();
 
   return (
-    <section className={`py-16 lg:py-24 bg-gradient-to-br from-primary/5 via-orange-50/50 to-red-50/30 ${className}`}>
+    <section className={`py-16 lg:py-24 ${className}`}>
       <div className="container mx-auto px-4">
         {/* CTA principal */}
         <div className="text-center mb-12 lg:mb-16">
@@ -54,21 +54,21 @@ export function CTASection({ className = '' }: CTASectionProps) {
             <Heart className="w-4 h-4 mr-2" />
             <span className="font-medium">Rejoignez l'aventure</span>
           </div>
-          
+
           <h2 className="text-3xl md:text-4xl lg:text-6xl font-bold mb-6 leading-tight">
             Prêt à découvrir
             <span className="block text-primary">nos saveurs ?</span>
           </h2>
-          
+
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed mb-8">
-            Rejoignez les centaines de clients qui ont déjà succombé à nos spécialités 
+            Rejoignez les centaines de clients qui ont déjà succombé à nos spécialités
             afro-antillaises. Une expérience culinaire authentique vous attend !
           </p>
 
           {/* CTA principal */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-            <Button 
-              size="lg" 
+            <Button
+              size="lg"
               className="bg-primary hover:bg-primary/90 text-white px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 group"
               asChild
             >
@@ -78,10 +78,10 @@ export function CTASection({ className = '' }: CTASectionProps) {
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>
-            
-            <Button 
-              variant="outline" 
-              size="lg" 
+
+            <Button
+              variant="outline"
+              size="lg"
               className="border-primary/30 text-primary hover:bg-primary/10 px-8 py-4 text-lg font-semibold"
               asChild
             >
@@ -93,43 +93,38 @@ export function CTASection({ className = '' }: CTASectionProps) {
         </div>
 
         {/* Options d'action */}
-        <div className={`grid gap-6 mb-12 ${
-          isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-3'
-        }`}>
+        <div className={`grid gap-6 mb-12 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-3'
+          }`}>
           {ctaOptions.map((option, index) => {
             const IconComponent = option.icon;
             return (
-              <Card 
-                key={index} 
-                className={`group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 relative overflow-hidden ${
-                  option.highlight ? 'ring-2 ring-primary/20 bg-primary/5' : ''
-                }`}
+              <Card
+                key={index}
+                className={`group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 relative overflow-hidden ${option.highlight ? 'ring-2 ring-primary/20 bg-primary/5' : ''
+                  }`}
               >
                 {option.highlight && (
                   <Badge className="absolute top-4 right-4 bg-primary text-white">
                     Recommandé
                   </Badge>
                 )}
-                
+
                 <CardContent className="p-8 text-center">
-                  <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 transition-all duration-300 group-hover:scale-110 ${
-                    option.highlight ? 'bg-primary/20' : 'bg-primary/10'
-                  }`}>
-                    <IconComponent className={`w-8 h-8 ${
-                      option.highlight ? 'text-primary' : 'text-primary'
-                    }`} />
+                  <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 transition-all duration-300 group-hover:scale-110 ${option.highlight ? 'bg-primary/20' : 'bg-primary/10'
+                    }`}>
+                    <IconComponent className={`w-8 h-8 ${option.highlight ? 'text-primary' : 'text-primary'
+                      }`} />
                   </div>
-                  
+
                   <h3 className="text-xl font-bold mb-3">{option.title}</h3>
                   <p className="text-muted-foreground mb-6 leading-relaxed">
                     {option.description}
                   </p>
-                  
-                  <Button 
+
+                  <Button
                     variant={option.variant}
-                    className={`w-full group-hover:shadow-md transition-all duration-300 ${
-                      option.variant === 'primary' ? 'bg-primary hover:bg-primary/90 text-white' : ''
-                    }`}
+                    className={`w-full group-hover:shadow-md transition-all duration-300 ${option.variant === 'primary' ? 'bg-primary hover:bg-primary/90 text-white' : ''
+                      }`}
                     asChild
                   >
                     <Link href={option.href}>
@@ -148,12 +143,12 @@ export function CTASection({ className = '' }: CTASectionProps) {
           <CardContent className="p-8 lg:p-12 text-center">
             <div className="max-w-4xl mx-auto">
               <div className="text-4xl lg:text-6xl text-primary/30 mb-6">"</div>
-              
+
               <blockquote className="text-xl lg:text-2xl font-medium text-foreground mb-8 leading-relaxed">
-                Chaque bouchée raconte une histoire, chaque plat porte l'âme de nos traditions. 
+                Chaque bouchée raconte une histoire, chaque plat porte l'âme de nos traditions.
                 Venez vivre une expérience culinaire unique qui éveillera tous vos sens.
               </blockquote>
-              
+
               <div className="flex items-center justify-center space-x-4 mb-8">
                 <div className="flex space-x-1">
                   {[...Array(5)].map((_, i) => (
@@ -162,7 +157,7 @@ export function CTASection({ className = '' }: CTASectionProps) {
                 </div>
                 <span className="text-muted-foreground">4.8/5 - Plus de 1000 avis clients</span>
               </div>
-              
+
               <div className="flex items-center justify-center space-x-3">
                 <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center">
                   <Heart className="w-6 h-6 text-primary" />

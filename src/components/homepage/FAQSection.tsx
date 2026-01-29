@@ -8,6 +8,7 @@ import { HelpCircle, MessageCircle, Phone, Clock, CreditCard, Users, ChefHat } f
 import Link from 'next/link';
 import { useIsMobile } from '@/lib/hooks';
 import { socialLinks } from '@/constants/navigation';
+import { SectionBadge } from '@/components/ui/section-badge';
 
 interface FAQSectionProps {
   className?: string;
@@ -78,34 +79,30 @@ export function FAQSection({ className = '' }: FAQSectionProps) {
   const isMobile = useIsMobile();
 
   return (
-    <section className={`py-16 lg:py-24 bg-muted/30 ${className}`}>
+    <section className={`py-16 lg:py-24 ${className}`}>
       <div className="container mx-auto px-4">
         {/* En-tête de section */}
         <div className="text-center mb-12 lg:mb-16">
-          <div className="inline-flex items-center bg-primary/10 text-primary rounded-full px-4 py-2 mb-4">
-            <HelpCircle className="w-4 h-4 mr-2" />
-            <span className="font-medium">FAQ</span>
-          </div>
+          <SectionBadge icon={HelpCircle} label="FAQ" />
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
             Questions Fréquentes
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Trouvez rapidement les réponses à vos questions les plus courantes 
+            Trouvez rapidement les réponses à vos questions les plus courantes
             sur notre service, notre menu et nos modalités.
           </p>
         </div>
 
-        <div className={`grid gap-8 lg:gap-12 ${
-          isMobile ? 'grid-cols-1' : 'grid-cols-1 lg:grid-cols-3'
-        }`}>
+        <div className={`grid gap-8 lg:gap-12 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 lg:grid-cols-3'
+          }`}>
           {/* FAQ principale */}
           <div className={isMobile ? 'order-1' : 'lg:col-span-2 order-1'}>
             <Accordion type="single" collapsible className="space-y-4">
               {faqData.map((item) => {
                 const IconComponent = item.icon;
                 return (
-                  <AccordionItem 
-                    key={item.id} 
+                  <AccordionItem
+                    key={item.id}
                     value={item.id}
                     className="border rounded-lg px-6 py-2 bg-background hover:shadow-md transition-all duration-300"
                   >
@@ -142,7 +139,7 @@ export function FAQSection({ className = '' }: FAQSectionProps) {
                   </div>
                   <h3 className="text-xl font-bold mb-3">Besoin d'aide ?</h3>
                   <p className="text-muted-foreground mb-4 text-sm leading-relaxed">
-                    Vous ne trouvez pas la réponse à votre question ? 
+                    Vous ne trouvez pas la réponse à votre question ?
                     Notre équipe est là pour vous aider !
                   </p>
                   <Button className="w-full bg-primary hover:bg-primary/90 text-white" asChild>

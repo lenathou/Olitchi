@@ -8,6 +8,7 @@ import { ChefHat, Heart, Star, Users, Award, Truck } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useIsMobile } from '@/lib/hooks';
+import { SectionBadge } from '@/components/ui/section-badge';
 
 interface AboutSectionProps {
   className?: string;
@@ -62,38 +63,34 @@ export function AboutSection({ className = '' }: AboutSectionProps) {
   const isMobile = useIsMobile();
 
   return (
-    <section id="about" className={`py-16 lg:py-24 bg-muted/30 ${className}`}>
+    <section id="about" className={`py-16 lg:py-24 ${className}`}>
       <div className="container mx-auto px-4">
         {/* En-tête de section */}
         <div className="text-center mb-12 lg:mb-16">
-          <div className="inline-flex items-center bg-primary/10 text-primary rounded-full px-4 py-2 mb-4">
-            <Heart className="w-4 h-4 mr-2" />
-            <span className="font-medium">Notre Histoire</span>
-          </div>
+          <SectionBadge icon={Heart} label="Notre Histoire" />
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
             Passion & Authenticité
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Depuis 2020, O'Litchi parcourt l'Essonne pour partager les saveurs authentiques 
+            Depuis 2020, O'Litchi parcourt l'Essonne pour partager les saveurs authentiques
             de la cuisine afro-antillaise avec passion et générosité.
           </p>
         </div>
 
         {/* Contenu principal */}
-        <div className={`grid gap-12 lg:gap-16 items-center ${
-          isMobile ? 'grid-cols-1' : 'grid-cols-1 lg:grid-cols-2'
-        }`}>
+        <div className={`grid gap-12 lg:gap-16 items-center ${isMobile ? 'grid-cols-1' : 'grid-cols-1 lg:grid-cols-2'
+          }`}>
           {/* Texte et valeurs */}
           <div className="space-y-8">
             <div className="prose prose-lg max-w-none">
               <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                Notre aventure a commencé avec une simple envie : faire découvrir les saveurs 
-                uniques de la cuisine afro-antillaise à travers un concept de food truck moderne 
+                Notre aventure a commencé avec une simple envie : faire découvrir les saveurs
+                uniques de la cuisine afro-antillaise à travers un concept de food truck moderne
                 et authentique.
               </p>
               <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-                Chaque bokit, chaque grillade, chaque plat est préparé avec des ingrédients 
-                soigneusement sélectionnés et des recettes traditionnelles qui racontent 
+                Chaque bokit, chaque grillade, chaque plat est préparé avec des ingrédients
+                soigneusement sélectionnés et des recettes traditionnelles qui racontent
                 l'histoire de nos origines.
               </p>
             </div>
@@ -142,7 +139,7 @@ export function AboutSection({ className = '' }: AboutSectionProps) {
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-                
+
                 {/* Badge flottant */}
                 <div className="absolute top-4 left-4">
                   <Badge className="bg-primary/90 text-white px-3 py-2 text-sm font-semibold">
@@ -153,9 +150,8 @@ export function AboutSection({ className = '' }: AboutSectionProps) {
             </div>
 
             {/* Statistiques */}
-            <div className={`grid gap-4 ${
-              isMobile ? 'grid-cols-2' : 'grid-cols-2'
-            }`}>
+            <div className={`grid gap-4 ${isMobile ? 'grid-cols-2' : 'grid-cols-2'
+              }`}>
               {stats.map((stat, index) => {
                 const IconComponent = stat.icon;
                 return (
@@ -187,7 +183,7 @@ export function AboutSection({ className = '' }: AboutSectionProps) {
             <CardContent className="p-0">
               <div className="text-4xl lg:text-6xl text-primary/30 mb-4">"</div>
               <blockquote className="text-xl lg:text-2xl font-medium text-foreground mb-6 leading-relaxed">
-                Chaque plat que nous servons porte en lui l'âme de nos traditions 
+                Chaque plat que nous servons porte en lui l'âme de nos traditions
                 et la passion de notre savoir-faire culinaire.
               </blockquote>
               <div className="flex items-center justify-center space-x-3">

@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Fraunces } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { cn } from "@/lib/utils";
+import NextImage from "next/image";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -13,6 +14,12 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
 	variable: "--font-geist-mono",
 	subsets: ["latin"],
+});
+
+const fraunces = Fraunces({
+	variable: "--font-fraunces",
+	subsets: ["latin"],
+	display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -87,8 +94,25 @@ export default function RootLayout({
 				<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 			</head>
 			<body
-				className={cn(geistSans.variable, geistMono.variable, "antialiased")}
+				className={cn(
+					geistSans.variable,
+					geistMono.variable,
+					fraunces.variable,
+					"antialiased"
+				)}
 			>
+				{/* Global Background Image */}
+				<div className="fixed inset-0 -z-50 w-full h-full">
+					<NextImage
+						src="/images/hero-bg-test.webp"
+						alt=""
+						fill
+						className="object-cover"
+						quality={90}
+						priority
+					/>
+				</div>
+
 				<header>
 					<Header />
 				</header>
