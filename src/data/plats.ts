@@ -38,7 +38,7 @@ export const plats: {
 			nom: "Bokit Complet",
 			description: "Jambon ou Poulet, œuf, emmental, sauce chien",
 			prix: 9.5,
-			image: "/images/produits/bokit-complet.webp",
+			image: "/images/bokit-hero1.webp",
 		},
 	],
 	grillades: [

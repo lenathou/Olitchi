@@ -21,14 +21,29 @@ export function HeroSection({ className = '' }: HeroSectionProps) {
 
         {/* Mobile Background */}
         <div className="absolute inset-0 z-0">
-          <Image
-            src="/images/mobile-hero.webp"
-            alt="Fond texture O'Litchi Mobile"
-            fill
-            className="object-cover"
-            quality={95}
-            priority
-          />
+          {/* Couche 1: Texture de fond */}
+          <div className="absolute inset-0">
+            <Image
+              src="/images/hero-bg-test.webp"
+              alt="Fond texture"
+              fill
+              className="object-cover"
+              quality={95}
+              priority
+            />
+          </div>
+
+          {/* Couche 2: Décoration (Overlay) */}
+          <div className="absolute inset-0 pointer-events-none">
+            <Image
+              src="/images/no-bgmobile.webp"
+              alt="Décoration Mobile"
+              fill
+              className="object-cover"
+              quality={95}
+              priority
+            />
+          </div>
         </div>
 
         {/* Mobile Content Container */}

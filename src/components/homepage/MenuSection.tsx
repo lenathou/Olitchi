@@ -9,7 +9,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { plats } from '@/data/plats';
 import { useIsMobile } from '@/lib/hooks';
-import { SectionBadge } from '@/components/ui/section-badge';
 
 interface MenuSectionProps {
   className?: string;
