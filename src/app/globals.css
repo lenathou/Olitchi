@@ -51,16 +51,16 @@
   /* Background / Text — style “papier” premium */
   --background: #f7f2ea;
   /* papier chaud */
-  --foreground: #1f2a2e;
-  /* charbon doux (pas noir pur) */
+  --foreground: #3a2b1f;
+  /* marron foncé chaud (remplace le charbon) */
 
   /* Surfaces */
   --card: #fbf7f1;
   /* papier légèrement plus clair */
-  --card-foreground: #1f2a2e;
+  --card-foreground: #3a2b1f;
 
   --popover: #fbf7f1;
-  --popover-foreground: #1f2a2e;
+  --popover-foreground: #3a2b1f;
 
   /* Brand (Primary) — orange de la hero (CTA) */
   --primary: #f07a2a;
@@ -109,11 +109,11 @@
 
   /* Sidebar (si tu l’utilises) — neutre et premium */
   --sidebar: #fbf7f1;
-  --sidebar-foreground: #1f2a2e;
+  --sidebar-foreground: #3a2b1f;
   --sidebar-primary: #f07a2a;
   --sidebar-primary-foreground: #ffffff;
   --sidebar-accent: #efe6dc;
-  --sidebar-accent-foreground: #1f2a2e;
+  --sidebar-accent-foreground: #3a2b1f;
   --sidebar-border: #e6d6c6;
   --sidebar-ring: #f07a2a;
 
@@ -124,7 +124,7 @@
   --sand-2: #f3e2cf;
   --brand-orange: #f07a2a;
   --palm: #2f6b4f;
-  --ink: #1f2a2e;
+  --ink: #3a2b1f;
 
   /* Premium Buttons Gradients */
   --premium-orange-start: #F58B3B;
@@ -152,4 +152,8 @@
 
 @utility bg-gradient-premium-beige {
   background: linear-gradient(180deg, var(--premium-beige-start) 0%, var(--premium-beige-end) 100%);
+}
+
+@utility drop-shadow-product {
+  filter: drop-shadow(0 10px 10px rgba(168, 85, 29, 0.4));
 }

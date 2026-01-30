@@ -17,21 +17,21 @@ export const plats: {
 			nom: "Bokit Jambon-Fromage",
 			description: "",
 			prix: 8,
-			image: "/images/produits/bokit-jambon.webp",
+			image: "/images/produits/bokit-jambon1.webp",
 		},
 		{
 			id: "bokit-poulet",
 			nom: "Bokit Poulet Boukané",
 			description: "Sauce Chien",
 			prix: 8,
-			image: "/images/produits/bokit-poulet.webp",
+			image: "/images/produits/bokit-poulet1.webp",
 		},
 		{
 			id: "bokit-morue",
 			nom: "Bokit Morue",
 			description: "Sauce Chien",
 			prix: 9,
-			image: "/images/plats/bokit-morue.jpg",
+			image: "/images/plats/bokit-morue1.jpg",
 		},
 		{
 			id: "bokit-complet",
@@ -44,7 +44,14 @@ export const plats: {
 	grillades: [
 		{
 			id: "grillade-cuisse",
-			nom: "Cuisse de poulet - Ailes de poulet",
+			nom: "Cuisse de poulet",
+			description: "Crudités Choux, Carottes",
+			prix: 5,
+			image: "/images/produits/cuisse-poulet.webp",
+		},
+		{
+			id: "grillade-ailes",
+			nom: "Ailes de poulet",
 			description: "Crudités Choux, Carottes",
 			prix: 5,
 			image: "/images/produits/cuisse-poulet.webp",

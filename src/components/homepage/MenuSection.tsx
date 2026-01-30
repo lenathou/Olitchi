@@ -9,6 +9,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { plats } from '@/data/plats';
 import { useIsMobile } from '@/lib/hooks';
+import useEmblaCarousel from 'embla-carousel-react';
+import { useCallback, useEffect, useState } from 'react';
 
 interface MenuSectionProps {
   className?: string;
@@ -26,6 +28,22 @@ interface MenuItem {
 
 export function MenuSection({ className = '' }: MenuSectionProps) {
   const isMobile = useIsMobile();
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false, align: 'center' });
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    onSelect();
+    emblaApi.on('select', onSelect);
+    return () => {
+      emblaApi.off('select', onSelect);
+    };
+  }, [emblaApi, onSelect]);
 
   // Sélection des plats populaires
   const platsPopolaires: MenuItem[] = [
@@ -67,7 +85,7 @@ export function MenuSection({ className = '' }: MenuSectionProps) {
   const renderMenuItem = (item: MenuItem) => (
     <Card
       key={item.id}
-      className="group relative overflow-hidden border-none bg-white/50 backdrop-blur-sm shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 rounded-3xl"
+      className="group relative overflow-hidden border-none bg-card/50 backdrop-blur-sm shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 rounded-3xl"
     >
       {/* Badges */}
       <div className="absolute top-4 right-4 z-20 flex flex-col gap-2">
@@ -78,7 +96,7 @@ export function MenuSection({ className = '' }: MenuSectionProps) {
           </Badge>
         )}
         {item.spicy && (
-          <Badge variant="destructive" className="bg-orange-500 hover:bg-orange-600 text-white border-none shadow-sm px-3 py-1 text-xs font-bold rounded-full">
+          <Badge variant="destructive" className="bg-destructive hover:bg-destructive/90 text-destructive-foreground border-none shadow-sm px-3 py-1 text-xs font-bold rounded-full">
             <Flame className="w-3 h-3 mr-1 fill-current" />
             Épicé
           </Badge>
@@ -92,7 +110,7 @@ export function MenuSection({ className = '' }: MenuSectionProps) {
             src={item.image}
             alt={item.nom}
             fill
-            className="object-cover group-hover:scale-105 transition-transform duration-500"
+            className="object-contain group-hover:scale-105 transition-transform duration-500 relative z-0 drop-shadow-product"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </div>
@@ -100,32 +118,90 @@ export function MenuSection({ className = '' }: MenuSectionProps) {
 
       {/* Contenu */}
       <CardHeader className="pt-5 pb-2 px-5 text-left">
-        <CardTitle className="text-xl font-serif font-bold text-gray-900 leading-tight">
+        <CardTitle className="text-xl font-serif font-bold text-foreground leading-tight h-14 flex items-center">
           {item.nom}
         </CardTitle>
         {item.description && (
-          <CardDescription className="text-sm text-gray-500 line-clamp-2 mt-1">
+          <CardDescription className="text-sm text-muted-foreground line-clamp-2 mt-1">
             {item.description}
           </CardDescription>
         )}
       </CardHeader>
 
       {/* Footer: Bouton & Prix */}
-      <CardContent className="px-5 pb-5 pt-2 flex items-center justify-between">
+      <CardContent className="px-5 pb-3 pt-2 flex items-center justify-between">
         <Button
-          variant="secondary"
-          className="bg-[#F3E2CF] hover:bg-[#ebd5c1] text-[#3a2b1f] font-semibold rounded-full px-5 h-9 text-sm"
+          variant="cream"
+          className="px-5 h-9"
           asChild
         >
           <Link href="/menu">
             Commander
           </Link>
         </Button>
-        <div className="text-xl font-bold text-gray-900 font-serif">
+        <div className="text-xl font-bold text-foreground font-serif">
           {item.prix.toFixed(2).replace('.', ',')}€
         </div>
       </CardContent>
     </Card>
+  );
+
+  // Mobile horizontal card renderer
+  const renderMobileMenuItem = (item: MenuItem) => (
+    <div key={item.id} className="embla__slide flex-[0_0_92vw] min-w-0 px-2">
+      <div className="relative w-full pt-4 pb-2">
+        {/* Container de texte - pleine largeur, positionné en bas */}
+        <Card className="relative border-none bg-card shadow-md rounded-[2rem] mt-12 z-0 overflow-visible h-48">
+          <CardContent className="p-0 h-full relative">
+            {/* Titre - Top Right */}
+            <div className="absolute top-6 right-5 left-40 text-right">
+              <h3 className="text-lg font-serif font-bold text-foreground leading-tight">
+                {item.nom}
+              </h3>
+            </div>
+
+            {/* Actions - Bottom Left (sous l'image) */}
+            <div className="absolute bottom-0 left-5 flex items-center gap-3 ">
+              <div className="text-lg font-bold text-foreground font-serif">
+                {item.prix.toFixed(2).replace('.', ',')}€
+              </div>
+              <Button
+                variant="cream"
+                className="px-5 h-9"
+                asChild
+              >
+                <Link href="/menu">
+                  Commander
+                </Link>
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Container d'image - positionné au dessus à gauche, plus haut et distinct */}
+        {item.image && (
+          <div className="absolute left-0 top-0 w-40 h-44 z-10">
+            <div className="relative w-full h-full bg-secondary rounded-[2rem] shadow-xl overflow-hidden transform -rotate-1">
+              {item.popular && (
+                <Badge className="absolute top-3 left-3 z-20 bg-primary hover:bg-primary/90 text-white border-none shadow-md px-2.5 py-1 text-xs font-bold rounded-full">
+                  <Star className="w-3 h-3 mr-1 fill-current" />
+                  Populaire
+                </Badge>
+              )}
+              <div className="relative w-full h-full p-2">
+                <Image
+                  src={item.image}
+                  alt={item.nom}
+                  fill
+                  className="object-contain drop-shadow-product scale-110"
+                  sizes="(max-width: 768px) 160px"
+                />
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
   );
 
   return (
@@ -135,29 +211,57 @@ export function MenuSection({ className = '' }: MenuSectionProps) {
         {/* En-tête "Notre Carte" Badge */}
         <div className="text-center mb-10">
           <div className="inline-flex items-center bg-gradient-premium-orange rounded-full p-[2px] pr-6 shadow-md mb-6 hover:shadow-lg transition-all transform hover:scale-105">
-            <div className="bg-white rounded-full p-2">
+            <div className="bg-card rounded-full p-2">
               <ChefHat className="w-5 h-5 text-primary" />
             </div>
             <span className="font-bold tracking-wide text-white ml-3 text-base">Notre Carte</span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-serif font-bold text-gray-900">
+          <h2 className="text-4xl md:text-5xl font-serif font-bold text-foreground">
             Saveurs <span className="text-primary">Authentiques</span>
           </h2>
-          <p className="text-lg text-gray-600 mt-4 max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground mt-4 max-w-2xl mx-auto">
             Une fusion gourmande entre la Guadeloupe et la Côte d'Ivoire, préparée avec passion.
           </p>
         </div>
 
-        {/* Plats populaires Grid - ONLY 4 ITEMS */}
+        {/* Plats populaires - Mobile Carousel / Desktop Grid */}
         <div className="mb-12">
           <div className="flex justify-end mb-4 px-2">
-            <Link href="/menu" className="hidden md:flex items-center text-primary font-semibold hover:underline bg-white/50 px-4 py-2 rounded-full backdrop-blur-sm">
+            <Link href="/menu" className="hidden md:flex items-center text-primary font-semibold hover:underline bg-card/50 px-4 py-2 rounded-full backdrop-blur-sm">
               Tout le menu <ArrowRight className="w-4 h-4 ml-2" />
             </Link>
           </div>
-          <div className={`grid gap-8 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4'}`}>
-            {platsPopolaires.map((item) => renderMenuItem(item))}
-          </div>
+
+          {/* Mobile: Carousel */}
+          {isMobile ? (
+            <div className="relative">
+              <div className="overflow-hidden" ref={emblaRef}>
+                <div className="flex gap-0">
+                  {platsPopolaires.map((item) => renderMobileMenuItem(item))}
+                </div>
+              </div>
+
+              {/* Dot Navigation */}
+              <div className="flex justify-center gap-2 mt-6">
+                {platsPopolaires.map((_, index) => (
+                  <button
+                    key={index}
+                    className={`h-2 rounded-full transition-all duration-300 ${index === selectedIndex
+                      ? 'w-8 bg-primary'
+                      : 'w-2 bg-muted'
+                      }`}
+                    onClick={() => emblaApi?.scrollTo(index)}
+                    aria-label={`Aller au produit ${index + 1}`}
+                  />
+                ))}
+              </div>
+            </div>
+          ) : (
+            /* Desktop: Grid */
+            <div className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+              {platsPopolaires.map((item) => renderMenuItem(item))}
+            </div>
+          )}
         </div>
 
         {/* Call to action (Mobile primarily, or extra desktop) */}

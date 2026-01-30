@@ -17,7 +17,7 @@ export function HeroSection({ className = '' }: HeroSectionProps) {
       {/* =========================================
           VERSION MOBILE (< md)
           ========================================= */}
-      <div className="relative w-full h-full flex flex-col md:hidden">
+      <div className="relative w-full h-screen flex flex-col md:hidden overflow-hidden">
 
         {/* Mobile Background */}
         <div className="absolute inset-0 z-0">
@@ -39,7 +39,7 @@ export function HeroSection({ className = '' }: HeroSectionProps) {
               src="/images/no-bgmobile.webp"
               alt="Décoration Mobile"
               fill
-              className="object-cover"
+              className="object-contain"
               quality={95}
               priority
             />
@@ -50,7 +50,7 @@ export function HeroSection({ className = '' }: HeroSectionProps) {
         <div className="container relative z-10 mx-auto px-4 h-full flex flex-col pt-20">
 
           {/* Texte & Titre */}
-          <div className="flex flex-col space-y-4 text-left items-start z-20">
+          <div className="flex flex-col space-y-4 text-left items-start z-20 w-[75%]">
             <h1 className="text-4xl font-extrabold leading-tight text-foreground font-serif">
               Savourez la <span className="text-primary">Street Food</span> Afro-Antillaise
             </h1>
@@ -58,6 +58,16 @@ export function HeroSection({ className = '' }: HeroSectionProps) {
               Découvrez des saveurs uniques et gourmandes inspirées des îles.
               Commandez maintenant et laissez-vous emporter par notre cuisine créole.
             </p>
+            <div className="flex flex-row gap-3 pt-4 z-40">
+              <Button asChild size="lg">
+                <Link href="/menu">
+                  Voir le menu
+                </Link>
+              </Button>
+              <Button asChild variant="secondary" size="lg">
+                <Link href="/commander">Commander</Link>
+              </Button>
+            </div>
           </div>
 
           {/* Atiéké Image (Positionné à droite hors-champ) */}
@@ -71,46 +81,44 @@ export function HeroSection({ className = '' }: HeroSectionProps) {
             />
           </div>
 
-          {/* Boutons Mobile */}
-          <div className="absolute bottom-[28vh] left-0 right-0 px-4 flex flex-row gap-3 z-40 justify-center">
-            <Button asChild size="lg">
-              <Link href="/menu">
-                Voir le menu
-              </Link>
-            </Button>
-            <Button asChild variant="secondary" size="lg">
-              <Link href="/commander">Commander</Link>
-            </Button>
-          </div>
+
 
           {/* Bottom Images Row (Mobile) */}
-          <div className="absolute bottom-0 left-0 w-full h-[25vh] pb-4 z-30 pointer-events-none">
-            <div className="relative w-full h-full flex items-end justify-center px-2">
-              {/* Bokit (Left) */}
-              <div className="relative w-1/3 h-full max-h-[160px] z-30 transform -translate-x-2">
+          <div className="absolute bottom-0 left-0 w-full h-[25vh] pb-2 z-30 pointer-events-none">
+            <div className="relative w-full h-full flex items-end justify-center px-4 mb-2">
+              {/* Bokit (Left) - Premier plan */}
+              <div className="relative w-[30%] h-32 z-10 -mr-0 mb-[1px]">
                 <Image
                   src="/images/bokit-hero1.webp"
                   alt="Burger Complet"
                   fill
-                  className="object-contain drop-shadow-lg scale-125 origin-bottom"
+                  className="object-contain drop-shadow-xl scale-110 origin-bottom-left"
+                  sizes="(max-width: 768px) 150px"
+                  priority
                 />
               </div>
-              {/* Accras (Center) */}
-              <div className="relative w-1/3 h-full max-h-[140px] z-20">
+
+              {/* Accras (Center) - Arrière plan */}
+              <div className="relative w-[33%] h-24 z-30 mb-0">
                 <Image
                   src="/images/accras-hero1.webp"
                   alt="Accras de morue"
                   fill
-                  className="object-contain drop-shadow-lg scale-110 origin-bottom"
+                  className="object-contain drop-shadow-lg scale-100"
+                  sizes="(max-width: 768px) 120px"
+                  priority
                 />
               </div>
-              {/* Brochettes (Right) */}
-              <div className="relative w-1/3 h-full max-h-[140px] z-10 transform translate-x-2">
+
+              {/* Brochettes (Right) - Premier plan */}
+              <div className="relative w-[34%] h-28 z-20 -ml-4 mb-2">
                 <Image
                   src="/images/brochettes-hero1.webp"
                   alt="Brochettes"
                   fill
-                  className="object-contain drop-shadow-lg scale-110 origin-bottom"
+                  className="object-contain drop-shadow-xl scale-110 origin-bottom-right"
+                  sizes="(max-width: 768px) 140px"
+                  priority
                 />
               </div>
             </div>
