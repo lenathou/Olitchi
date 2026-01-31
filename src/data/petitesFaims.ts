@@ -42,13 +42,6 @@ export const petitesFaims = [
 		image: "/images/petites-faims/accras-5.jpg",
 	},
 	{ 
-		id: "accras-10", 
-		nom: "Accras de Morue (10)", 
-		description: "", 
-		prix: 5,
-		image: "/images/petites-faims/accras-10.jpg",
-	},
-	{ 
 		id: "pastel-thon", 
 		nom: "Pastel de Thon", 
 		description: "", 

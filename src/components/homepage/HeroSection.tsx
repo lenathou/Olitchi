@@ -21,17 +21,7 @@ export function HeroSection({ className = '' }: HeroSectionProps) {
 
         {/* Mobile Background */}
         <div className="absolute inset-0 z-0">
-          {/* Couche 1: Texture de fond */}
-          <div className="absolute inset-0">
-            <Image
-              src="/images/hero-bg-test.webp"
-              alt="Fond texture"
-              fill
-              className="object-cover"
-              quality={95}
-              priority
-            />
-          </div>
+
 
           {/* Couche 2: Décoration (Overlay) */}
           <div className="absolute inset-0 pointer-events-none">
@@ -56,7 +46,6 @@ export function HeroSection({ className = '' }: HeroSectionProps) {
             </h1>
             <p className="text-lg text-muted-foreground max-w-xs leading-relaxed">
               Découvrez des saveurs uniques et gourmandes inspirées des îles.
-              Commandez maintenant et laissez-vous emporter par notre cuisine créole.
             </p>
             <div className="flex flex-row gap-3 pt-4 z-40">
               <Button asChild size="lg">
@@ -71,7 +60,7 @@ export function HeroSection({ className = '' }: HeroSectionProps) {
           </div>
 
           {/* Atiéké Image (Positionné à droite hors-champ) */}
-          <div className="absolute top-[25%] right-[-25%] w-[85%] aspect-[4/3] z-10 pointer-events-none">
+          <div className="absolute top-[30%] right-[-40%] w-[100%] aspect-[4/3] z-10 pointer-events-none">
             <Image
               src="/images/atieke-test.webp"
               alt="Plat Atiéké Poisson Braisé"
@@ -84,7 +73,7 @@ export function HeroSection({ className = '' }: HeroSectionProps) {
 
 
           {/* Bottom Images Row (Mobile) */}
-          <div className="absolute bottom-0 left-0 w-full h-[25vh] pb-2 z-30 pointer-events-none">
+          <div className="absolute bottom-25 left-0 w-full h-[25vh] pb-2 z-30 pointer-events-none">
             <div className="relative w-full h-full flex items-end justify-center px-4 mb-2">
               {/* Bokit (Left) - Premier plan */}
               <div className="relative w-[30%] h-32 z-10 -mr-0 mb-[1px]">
@@ -99,7 +88,7 @@ export function HeroSection({ className = '' }: HeroSectionProps) {
               </div>
 
               {/* Accras (Center) - Arrière plan */}
-              <div className="relative w-[33%] h-24 z-30 mb-0">
+              <div className="relative w-[40%] h-24 z-30 mb-0">
                 <Image
                   src="/images/accras-hero1.webp"
                   alt="Accras de morue"
