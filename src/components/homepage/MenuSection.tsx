@@ -2,7 +2,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Star, ChefHat, Flame, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
@@ -85,7 +85,7 @@ export function MenuSection({ className = '' }: MenuSectionProps) {
   const renderMenuItem = (item: MenuItem) => (
     <Card
       key={item.id}
-      className="group relative overflow-hidden border-none bg-card/50 backdrop-blur-sm shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 rounded-3xl"
+      className="group flex flex-col relative overflow-hidden border-white border-2 bg-primary/10  shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 rounded-3xl"
     >
       {/* Badges */}
       <div className="absolute top-4 right-4 z-20 flex flex-col gap-2">
@@ -105,7 +105,7 @@ export function MenuSection({ className = '' }: MenuSectionProps) {
 
       {/* Image du plat */}
       {item.image && (
-        <div className="relative h-48 w-full overflow-hidden">
+        <div className="relative h-48 w-full overflow-hidden shrink-0">
           <Image
             src={item.image}
             alt={item.nom}
@@ -117,32 +117,33 @@ export function MenuSection({ className = '' }: MenuSectionProps) {
       )}
 
       {/* Contenu */}
-      <CardHeader className="pt-5 pb-2 px-5 text-left">
-        <CardTitle className="text-xl font-serif font-bold text-foreground leading-tight h-14 flex items-center">
-          {item.nom}
-        </CardTitle>
-        {item.description && (
-          <CardDescription className="text-sm text-muted-foreground line-clamp-2 mt-1">
-            {item.description}
-          </CardDescription>
-        )}
-      </CardHeader>
-
-      {/* Footer: Bouton & Prix */}
-      <CardContent className="px-5 pb-3 pt-2 flex items-center justify-between">
-        <Button
-          variant="cream"
-          className="px-5 h-9"
-          asChild
-        >
-          <Link href="/menu">
-            Commander
-          </Link>
-        </Button>
-        <div className="text-xl font-bold text-foreground font-serif">
-          {item.prix.toFixed(2).replace('.', ',')}€
+      <div className="flex flex-col flex-1 p-5 gap-3">
+        <div className="space-y-1">
+          <h3 className="text-xl font-serif font-bold text-foreground leading-tight">
+            {item.nom}
+          </h3>
+          {item.description && (
+            <p className="text-sm text-muted-foreground line-clamp-2">
+              {item.description}
+            </p>
+          )}
         </div>
-      </CardContent>
+
+        <div className="flex items-center justify-between mt-auto pt-2">
+          <span className="text-xl font-bold text-foreground font-serif">
+            {item.prix.toFixed(2).replace('.', ',')}€
+          </span>
+          <Button
+            variant="cream"
+            className="px-5 h-9"
+            asChild
+          >
+            <Link href="/menu">
+              Commander
+            </Link>
+          </Button>
+        </div>
+      </div>
     </Card>
   );
 
@@ -151,7 +152,7 @@ export function MenuSection({ className = '' }: MenuSectionProps) {
     <div key={item.id} className="embla__slide flex-[0_0_92vw] min-w-0 px-2">
       <div className="relative w-full pt-4 pb-2">
         {/* Container de texte - pleine largeur, positionné en bas */}
-        <Card className="relative border-none bg-card shadow-md rounded-[2rem] mt-12 z-0 overflow-visible h-48">
+        <Card className="relative  bg-white/30 shadow-md  border-1 border-white rounded-[2rem] mt-12 z-0 overflow-visible h-48">
           <CardContent className="p-0 h-full relative">
             {/* Titre - Top Right */}
             <div className="absolute top-6 right-5 left-40 text-right">
@@ -181,7 +182,7 @@ export function MenuSection({ className = '' }: MenuSectionProps) {
         {/* Container d'image - positionné au dessus à gauche, plus haut et distinct */}
         {item.image && (
           <div className="absolute left-0 top-0 w-40 h-44 z-10">
-            <div className="relative w-full h-full bg-secondary rounded-[2rem] shadow-xl overflow-hidden transform -rotate-1">
+            <div className="relative w-full h-full bg-secondary rounded-[2rem] shadow-xl overflow-hidden transform -rotate-1 border-1 border-white p-2">
               {item.popular && (
                 <Badge className="absolute top-3 left-3 z-20 bg-primary hover:bg-primary/90 text-white border-none shadow-md px-2.5 py-1 text-xs font-bold rounded-full">
                   <Star className="w-3 h-3 mr-1 fill-current" />
@@ -226,11 +227,7 @@ export function MenuSection({ className = '' }: MenuSectionProps) {
 
         {/* Plats populaires - Mobile Carousel / Desktop Grid */}
         <div className="mb-12">
-          <div className="flex justify-end mb-4 px-2">
-            <Link href="/menu" className="hidden md:flex items-center text-primary font-semibold hover:underline bg-card/50 px-4 py-2 rounded-full backdrop-blur-sm">
-              Tout le menu <ArrowRight className="w-4 h-4 ml-2" />
-            </Link>
-          </div>
+
 
           {/* Mobile: Carousel */}
           {isMobile ? (
@@ -264,15 +261,17 @@ export function MenuSection({ className = '' }: MenuSectionProps) {
           )}
         </div>
 
-        {/* Call to action (Mobile primarily, or extra desktop) */}
-        <div className="text-center md:hidden">
+        {/* Call to action (Mobile & Desktop) */}
+        <div className="text-center mt-12">
           <Button
             size="lg"
-            className="bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg font-bold rounded-full shadow-lg"
+            variant="tertiary"
+            className="px-10 py-7 text-xl font-bold rounded-full shadow-lg hover:shadow-xl"
             asChild
           >
             <Link href="/menu">
               Explorer tout le Menu
+              <ArrowRight className="w-5 h-5 ml-2" />
             </Link>
           </Button>
         </div>

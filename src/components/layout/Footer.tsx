@@ -50,7 +50,7 @@ export default function Footer() {
 				<Separator className="my-8" />
 
 				<div className="text-center text-muted-foreground">
-					<p>&copy; 2025 olitchi91. Tous droits réservés.</p>
+					<p>&copy; 2026 olitchi91. Tous droits réservés.</p>
 				</div>
 			</div>
 		</footer>

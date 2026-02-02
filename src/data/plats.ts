@@ -17,7 +17,7 @@ export const plats: {
 			nom: "Bokit Jambon-Fromage",
 			description: "",
 			prix: 8,
-			image: "/images/produits/bokit-jambon1.webp",
+			image: "/images/produits/bokit-jambon-fromage1.webp",
 		},
 		{
 			id: "bokit-poulet",
@@ -31,7 +31,7 @@ export const plats: {
 			nom: "Bokit Morue",
 			description: "Sauce Chien",
 			prix: 9,
-			image: "/images/plats/bokit-morue1.jpg",
+			image: "/images/produits/bokit-morue1.webp",
 		},
 		{
 			id: "bokit-complet",

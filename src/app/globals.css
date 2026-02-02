@@ -132,6 +132,13 @@
   --premium-beige-start: #FFFFFF;
   --premium-beige-end: #F9EAD9;
   --premium-beige-border: #EBCBA6;
+
+  /* Tertiary - Warm Gold/Honey */
+  --tertiary: #fae3cc;
+  --tertiary-foreground: #3a2b1f;
+  --premium-tertiary-start: #FFF8F0;
+  --premium-tertiary-end: #FCD5B5;
+  --premium-tertiary-border: #E6C2A0;
 }
 
 @layer base {
@@ -152,6 +159,10 @@
 
 @utility bg-gradient-premium-beige {
   background: linear-gradient(180deg, var(--premium-beige-start) 0%, var(--premium-beige-end) 100%);
+}
+
+@utility bg-gradient-premium-tertiary {
+  background: linear-gradient(180deg, var(--premium-tertiary-start) 0%, var(--premium-tertiary-end) 100%);
 }
 
 @utility drop-shadow-product {

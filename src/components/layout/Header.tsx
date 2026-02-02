@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import {
 	Sheet,
@@ -47,8 +48,14 @@ export default function Header() {
 		>
 			<nav className="container mx-auto px-4 flex items-center justify-between">
 				{/* Logo */}
-				<Link href="/" className="flex items-center space-x-2">
-					<span className="text-2xl font-bold font-serif text-brand-orange">OLitchy</span>
+				<Link href="/" className="relative h-10 w-32 md:h-12 md:w-40 transition-transform hover:scale-105">
+					<Image
+						src="/olitchy-logo.svg"
+						alt="O'Litchy"
+						fill
+						className="object-contain" // object-contain to preserve aspect ratio
+						priority
+					/>
 				</Link>
 
 				{/* Desktop Right Side: Nav + CTA */}
@@ -87,9 +94,15 @@ export default function Header() {
 						</SheetTrigger>
 						<SheetContent side="left" className="w-[300px] sm:w-[400px]">
 							<SheetHeader>
-								<SheetTitle className="flex items-center space-x-2 text-left">
-									<Truck className="h-6 w-6 text-primary" />
-									<span className="text-xl font-bold font-serif">olitchi91</span>
+								<SheetTitle className="text-left">
+									<div className="relative h-10 w-32">
+										<Image
+											src="/olitchy-logo.svg"
+											alt="O'Litchy"
+											fill
+											className="object-contain object-left"
+										/>
+									</div>
 								</SheetTitle>
 							</SheetHeader>
 

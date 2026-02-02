@@ -173,7 +173,7 @@ export function LocationSection({ className = '' }: LocationSectionProps) {
             </div>
 
             {/* Carte interactive (placeholder) */}
-            <Card className="overflow-hidden">
+            <Card className="overflow-hidden rounded-3xl border-none shadow-md">
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
                   <MapPin className="w-5 h-5 text-primary" />
