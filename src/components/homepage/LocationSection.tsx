@@ -4,8 +4,9 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { MapPin, Clock, Phone, Navigation, Calendar, Info } from 'lucide-react';
+import { MapPin, Info } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useIsMobile } from '@/lib/hooks';
 import { SectionBadge } from '@/components/ui/section-badge';
 
@@ -42,19 +43,19 @@ const schedule = [
 
 const quickInfo = [
   {
-    icon: MapPin,
+    icon: '/images/icons/local.webp',
     title: 'Zone de service',
     description: 'Essonne (91)',
     details: 'Les Ulis, Évry, Corbeil et environs'
   },
   {
-    icon: Phone,
+    icon: '/images/icons/contact.webp',
     title: 'Commandes',
     description: 'Sur place uniquement',
     details: 'Paiement CB et espèces acceptés'
   },
   {
-    icon: Calendar,
+    icon: '/images/icons/calendar.webp',
     title: 'Événements privés',
     description: 'Sur demande',
     details: 'Mariages, entreprises, festivités'
@@ -79,146 +80,151 @@ export function LocationSection({ className = '' }: LocationSectionProps) {
           </p>
         </div>
 
-        {/* Contenu principal */}
-        <div className={`grid gap-8 lg:gap-12 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 lg:grid-cols-2'
-          }`}>
-          {/* Planning de la semaine */}
-          <div className="space-y-6">
-            <div className="flex items-center space-x-3 mb-6">
-              <div className="bg-primary/10 p-3 rounded-full">
-                <Calendar className="w-6 h-6 text-primary" />
-              </div>
-              <h3 className="text-2xl font-bold">Planning de la semaine</h3>
+        {/* Contenu principal - Structure 2 Colonnes Panneaux */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-stretch">
+
+          {/* COLONNE GAUCHE : PLANNING */}
+          <Card className="relative h-full bg-primary/5 border-primary/20 pt-14 pb-8 px-6 lg:px-8 rounded-3xl flex flex-col shadow-none">
+            {/* En-tête Flottant "Pill" */}
+            <div className="absolute -top-7 left-1/2 -translate-x-1/2 bg-gradient-premium-orange text-white px-8 py-4 rounded-full shadow-[0_4px_10px_rgba(240,122,42,0.4)] flex items-center gap-3 whitespace-nowrap z-10 border-2 border-[var(--premium-tertiary-start)]">
+              <Image
+                src="/images/icons/calendar.webp"
+                alt="Planning"
+                width={24}
+                height={24}
+                className="w-6 h-6 object-contain"
+              />
+              <h3 className="text-lg font-bold font-serif tracking-wide">Planning de la semaine</h3>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-4 flex-1">
               {schedule.map((item, index) => (
-                <Card key={index} className={`transition-all duration-300 hover:shadow-lg ${item.isToday ? 'ring-2 ring-primary bg-primary/5' : 'hover:-translate-y-1'
-                  }`}>
-                  <CardContent className="p-6">
-                    <div className="flex items-start justify-between">
-                      <div className="space-y-2">
-                        <div className="flex items-center space-x-2">
-                          <h4 className="font-semibold text-lg">{item.day}</h4>
-                          {item.isToday && (
-                            <Badge className="bg-primary text-white text-xs">
-                              Aujourd'hui
-                            </Badge>
-                          )}
-                        </div>
-                        <div className="flex items-center space-x-2 text-muted-foreground">
-                          <MapPin className="w-4 h-4" />
-                          <span>{item.location}</span>
-                        </div>
-                        <div className="flex items-center space-x-2 text-muted-foreground">
-                          <Clock className="w-4 h-4" />
-                          <span>{item.hours}</span>
-                        </div>
+                <Card
+                  key={index}
+                  variant="bubble"
+                  className={`relative group p-5 rounded-3xl transition-all duration-300 border-2 ${item.isToday ? 'border-primary ring-1 ring-primary/20 bg-primary/10' : ''
+                    }`}
+                >
+                  <div className="flex items-start gap-4">
+                    <div className="shrink-0 mt-1">
+                      <Image
+                        src="/images/icons/local.webp"
+                        alt="Localisation"
+                        width={24}
+                        height={24}
+                        className="w-6 h-6 object-contain"
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <div className="font-serif font-bold text-xl text-foreground mb-2">
+                        <span className="block mb-1">{item.day}</span>
+                        <span className="block text-base font-sans font-medium text-muted-foreground/90">{item.location}</span>
                       </div>
-                      <Button variant="outline" size="sm" asChild>
-                        <Link href="/localisation">
-                          <Navigation className="w-4 h-4 mr-1" />
-                          Itinéraire
-                        </Link>
+                      <div className="text-base font-semibold text-foreground/80 bg-primary/10 inline-block px-4 py-1.5 rounded-full">
+                        {item.hours}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Bouton Itinéraire */}
+                  {index === 3 && (
+                    <div className="absolute bottom-5 right-5">
+                      <Button size="sm" className="bg-gradient-premium-orange rounded-full text-xs h-9 px-5 shadow-md hover:scale-105 transition-transform" asChild>
+                        <Link href="/localisation">Itinéraire &gt;</Link>
                       </Button>
                     </div>
-                  </CardContent>
+                  )}
                 </Card>
               ))}
             </div>
 
-            {/* Note importante */}
-            <Card className="bg-blue-50 border-blue-200">
-              <CardContent className="p-4">
-                <div className="flex items-start space-x-3">
-                  <Info className="w-5 h-5 text-blue-600 mt-0.5 shrink-0" />
-                  <div className="text-sm text-blue-800">
-                    <p className="font-medium mb-1">Planning susceptible de modifications</p>
-                    <p>Suivez-nous sur nos réseaux sociaux pour connaître notre position en temps réel et les éventuels changements d'horaires.</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Informations pratiques */}
-          <div className="space-y-6">
-            <div className="flex items-center space-x-3 mb-6">
-              <div className="bg-primary/10 p-3 rounded-full">
-                <Info className="w-6 h-6 text-primary" />
+            {/* Note importante - Style intégré */}
+            <div className="mt-8 bg-background/50 rounded-2xl p-5 border border-primary/10 flex gap-4 items-start shrink-0">
+              <div className="bg-primary rounded-full p-1.5 shrink-0 mt-0.5 shadow-sm">
+                <Image
+                  src="/images/icons/warning.webp"
+                  alt="Important"
+                  width={20}
+                  height={20}
+                  className="w-4 h-4 object-contain"
+                />
               </div>
-              <h3 className="text-2xl font-bold">Informations pratiques</h3>
+              <div>
+                <h4 className="font-bold text-foreground text-sm mb-1">Planning susceptible de modifications</h4>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  Suivez-nous sur nos réseaux sociaux pour connaître notre position en temps réel.
+                </p>
+              </div>
+            </div>
+          </Card>
+
+
+          {/* COLONNE DROITE : INFOS & CARTE */}
+          <Card className="relative h-full bg-primary/5 border-primary/20 pt-14 pb-8 px-6 lg:px-8 rounded-3xl flex flex-col shadow-none">
+            {/* En-tête Flottant "Pill" */}
+            <div className="absolute -top-7 left-1/2 -translate-x-1/2 bg-gradient-premium-orange text-white px-8 py-4 rounded-full shadow-[0_4px_10px_rgba(240,122,42,0.4)] flex items-center gap-3 whitespace-nowrap z-10 border-2 border-[var(--premium-tertiary-start)]">
+              <Image
+                src="/images/icons/info.webp"
+                alt="Infos"
+                width={24}
+                height={24}
+                className="w-6 h-6 object-contain"
+              />
+              <h3 className="text-lg font-bold font-serif tracking-wide">Informations pratiques</h3>
             </div>
 
-            <div className="space-y-4">
+            {/* Liste Infos */}
+            <div className="space-y-8 mb-10 flex-1">
               {quickInfo.map((info, index) => {
-                const IconComponent = info.icon;
                 return (
-                  <Card key={index} className="hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-                    <CardHeader className="pb-3">
-                      <CardTitle className="flex items-center space-x-3">
-                        <div className="bg-primary/10 p-2 rounded-lg">
-                          <IconComponent className="w-5 h-5 text-primary" />
-                        </div>
-                        <span className="text-lg">{info.title}</span>
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="pt-0">
-                      <p className="font-medium text-foreground mb-2">{info.description}</p>
-                      <p className="text-sm text-muted-foreground">{info.details}</p>
-                    </CardContent>
-                  </Card>
+                  <div key={index} className="flex items-center gap-4 group">
+                    <div className="shrink-0 p-3 rounded-full bg-background/50 border border-primary/10 shadow-sm group-hover:scale-105 transition-transform duration-300">
+                      <Image
+                        src={info.icon}
+                        alt={info.title}
+                        width={48}
+                        height={48}
+                        className="w-10 h-10 object-contain"
+                      />
+                    </div>
+                    <div>
+                      <h4 className="font-serif font-bold text-2xl text-foreground mb-1">{info.title}</h4>
+                      <p className="font-medium text-lg text-foreground/90">{info.description}</p>
+                      <p className="text-base text-muted-foreground">{info.details}</p>
+                    </div>
+                  </div>
                 );
               })}
             </div>
 
-            {/* Carte interactive (placeholder) */}
-            <Card className="overflow-hidden rounded-3xl border-none shadow-md">
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <MapPin className="w-5 h-5 text-primary" />
-                  <span>Notre zone de service</span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="p-0">
-                <div className="h-64 bg-gradient-to-br from-green-100 to-blue-100 flex items-center justify-center relative overflow-hidden">
-                  {/* Simulation d'une carte */}
-                  <div className="absolute inset-0 opacity-20">
-                    <div className="absolute top-4 left-4 w-8 h-8 bg-primary rounded-full animate-pulse" />
-                    <div className="absolute top-12 right-8 w-6 h-6 bg-orange-400 rounded-full animate-pulse delay-300" />
-                    <div className="absolute bottom-8 left-12 w-7 h-7 bg-red-400 rounded-full animate-pulse delay-700" />
-                    <div className="absolute bottom-4 right-4 w-5 h-5 bg-blue-400 rounded-full animate-pulse delay-1000" />
-                  </div>
+            {/* Carte Illustrée */}
+            <div className="relative overflow-hidden rounded-3xl border border-primary/20 bg-background/50 shadow-sm group shrink-0 mt-auto hover:shadow-md transition-all duration-300">
+              {/* Background Decor/Map */}
+              <div className="absolute inset-0 opacity-40">
+                <div className="absolute -right-10 -bottom-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl opacity-50"></div>
+                <div className="absolute -left-10 -top-10 w-40 h-40 bg-orange-100 rounded-full blur-3xl opacity-50"></div>
+              </div>
 
-                  <div className="text-center z-10">
-                    <MapPin className="w-12 h-12 text-primary mx-auto mb-3" />
-                    <p className="text-lg font-semibold text-foreground mb-2">Essonne (91)</p>
-                    <p className="text-sm text-muted-foreground mb-4">Les Ulis, Évry, Corbeil et environs</p>
-                    <Button variant="outline" asChild>
-                      <Link href="/localisation">
-                        Voir la carte détaillée
-                      </Link>
-                    </Button>
-                  </div>
+              <div className="relative p-8 h-64 flex flex-col items-center justify-center text-center">
+                <div className="mb-4 relative">
+                  <MapPin className="w-12 h-12 text-primary drop-shadow-lg animate-bounce" />
+                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-8 h-2 bg-black/10 rounded-full blur-xs"></div>
                 </div>
-              </CardContent>
-            </Card>
 
-            {/* Contact rapide */}
-            <Card className="bg-primary/5 border-primary/20">
-              <CardContent className="p-6 text-center">
-                <h4 className="text-xl font-bold mb-3">Une question sur notre localisation ?</h4>
-                <p className="text-muted-foreground mb-4">
-                  Contactez-nous pour connaître notre position exacte ou pour organiser un événement privé.
-                </p>
-                <Button className="bg-primary hover:bg-primary/90 text-white" asChild>
-                  <Link href="/contact">
-                    Nous contacter
-                  </Link>
+                <h4 className="font-serif font-bold text-2xl text-foreground mb-1">Essonne</h4>
+                <p className="text-muted-foreground text-sm mb-6 max-w-[200px]">Les Ulis, Évry, Corbeil et environs.</p>
+
+                <Button size="lg" className="bg-gradient-premium-orange hover:shadow-xl rounded-full text-white font-bold px-8 shadow-lg transition-all hover:-translate-y-0.5" asChild>
+                  <Link href="/localisation">Voir la carte détaillée &gt;</Link>
                 </Button>
-              </CardContent>
-            </Card>
-          </div>
+              </div>
+
+              {/* Leaf Decor (svg or CSS) */}
+              <div className="absolute bottom-0 left-0 w-16 h-16 text-primary/10 rotate-12 pointer-events-none">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.66,19.7C8.58,15.06 10.13,10.5 18.88,11.63V11.63C20.4,8.19 18.33,4.91 16.12,3.12C14.7,1.96 11,1.1 11,1.1C11,1.1 11.5,4 11.5,5C12,6.5 13.5,6.5 13.5,6.5C13.5,6.5 11.23,7.18 10.15,9.45C9.07,11.71 10.13,13.78 10.13,13.78C10.13,13.78 13.75,8.22 17,8Z" /></svg>
+              </div>
+            </div>
+          </Card>
         </div>
       </div>
     </section>

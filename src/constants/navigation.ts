@@ -25,7 +25,7 @@ export const mainNavigation = [
   {
     id: 'localisation' as const,
     label: 'Localisation',
-    href: '/localisation-horaires',
+    href: '/localisation',
     description: 'Où nous trouver aux Ulis',
   },
   {

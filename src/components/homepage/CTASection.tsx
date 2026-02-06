@@ -6,7 +6,9 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { MapPin, Phone, Star, Heart, ArrowRight, Calendar } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useIsMobile } from '@/lib/hooks';
+import { SectionBadge } from '@/components/ui/section-badge';
 
 interface CTASectionProps {
   className?: string;
@@ -14,16 +16,16 @@ interface CTASectionProps {
 
 const ctaOptions = [
   {
-    icon: MapPin,
+    iconSrc: '/images/icons/local.webp',
     title: 'Nous trouver',
     description: 'Découvrez notre planning et venez nous rendre visite',
     action: 'Voir la localisation',
     href: '/localisation',
-    variant: 'primary' as const,
+    variant: 'default' as const,
     highlight: true
   },
   {
-    icon: Phone,
+    iconSrc: '/images/icons/calendar.webp',
     title: 'Événement privé',
     description: 'Organisez votre événement avec nos saveurs authentiques',
     action: 'Demander un devis',
@@ -32,7 +34,7 @@ const ctaOptions = [
     highlight: false
   },
   {
-    icon: Star,
+    iconSrc: '/images/icons/contact.webp',
     title: 'Suivez-nous',
     description: 'Restez informés de nos actualités et nouveautés',
     action: 'Réseaux sociaux',
@@ -50,14 +52,10 @@ export function CTASection({ className = '' }: CTASectionProps) {
       <div className="container mx-auto px-4">
         {/* CTA principal */}
         <div className="text-center mb-12 lg:mb-16">
-          <div className="inline-flex items-center bg-primary/10 text-primary rounded-full px-4 py-2 mb-6">
-            <Heart className="w-4 h-4 mr-2" />
-            <span className="font-medium">Rejoignez l'aventure</span>
-          </div>
+          <SectionBadge icon={Heart} label="Rejoignez l'aventure" />
 
-          <h2 className="text-3xl md:text-4xl lg:text-6xl font-bold mb-6 leading-tight">
-            Prêt à découvrir
-            <span className="block text-primary">nos saveurs ?</span>
+          <h2 className="text-3xl md:text-4xl lg:text-6xl font-bold mb-6 leading-tight font-serif">
+            Prêt à découvrir <span className="text-primary italic">nos saveurs ?</span>
           </h2>
 
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed mb-8">
@@ -65,15 +63,14 @@ export function CTASection({ className = '' }: CTASectionProps) {
             afro-antillaises. Une expérience culinaire authentique vous attend !
           </p>
 
-          {/* CTA principal */}
+          {/* Boutons d'action principaux */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
             <Button
               size="lg"
-              className="bg-primary hover:bg-primary/90 text-white px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 group"
+              className="bg-gradient-premium-orange text-white px-8 py-6 rounded-full text-lg font-bold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 group"
               asChild
             >
               <Link href="/localisation">
-                <MapPin className="w-5 h-5 mr-2" />
                 Nous trouver maintenant
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
               </Link>
@@ -82,7 +79,7 @@ export function CTASection({ className = '' }: CTASectionProps) {
             <Button
               variant="outline"
               size="lg"
-              className="border-primary/30 text-primary hover:bg-primary/10 px-8 py-4 text-lg font-semibold"
+              className="border-2 border-primary/20 text-primary hover:bg-primary/5 px-8 py-6 rounded-full text-lg font-bold transition-all duration-300"
               asChild
             >
               <Link href="/menu">
@@ -92,90 +89,99 @@ export function CTASection({ className = '' }: CTASectionProps) {
           </div>
         </div>
 
-        {/* Options d'action */}
-        <div className={`grid gap-6 mb-12 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-3'
-          }`}>
-          {ctaOptions.map((option, index) => {
-            const IconComponent = option.icon;
-            return (
-              <Card
-                key={index}
-                className={`group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 relative overflow-hidden ${option.highlight ? 'ring-2 ring-primary/20 bg-primary/5' : ''
-                  }`}
-              >
-                {option.highlight && (
-                  <Badge className="absolute top-4 right-4 bg-primary text-white">
-                    Recommandé
-                  </Badge>
-                )}
+        {/* Options d'action Grid */}
+        <div className={`grid gap-8 mb-16 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-3'}`}>
+          {ctaOptions.map((option, index) => (
+            <Card
+              key={index}
+              variant="bubble"
+              className={`group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 relative overflow-hidden rounded-[2rem] border-2 ${option.highlight ? 'border-primary/20 bg-primary/5' : ''
+                }`}
+            >
+              {option.highlight && (
+                <Badge className="absolute top-4 right-4 bg-gradient-premium-orange text-white border-none shadow-sm">
+                  Recommandé
+                </Badge>
+              )}
 
-                <CardContent className="p-8 text-center">
-                  <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 transition-all duration-300 group-hover:scale-110 ${option.highlight ? 'bg-primary/20' : 'bg-primary/10'
-                    }`}>
-                    <IconComponent className={`w-8 h-8 ${option.highlight ? 'text-primary' : 'text-primary'
-                      }`} />
-                  </div>
+              <CardContent className="p-8 text-center flex flex-col items-center h-full">
+                <Image
+                  src={option.iconSrc}
+                  alt={option.title}
+                  width={64}
+                  height={64}
+                  className="w-16 h-16 object-contain mb-6 drop-shadow-sm group-hover:scale-110 transition-transform duration-300"
+                />
 
-                  <h3 className="text-xl font-bold mb-3">{option.title}</h3>
-                  <p className="text-muted-foreground mb-6 leading-relaxed">
-                    {option.description}
-                  </p>
+                <h3 className="text-2xl font-serif font-bold mb-3 text-foreground">{option.title}</h3>
+                <p className="text-muted-foreground mb-8 leading-relaxed flex-1">
+                  {option.description}
+                </p>
 
-                  <Button
-                    variant={option.variant}
-                    className={`w-full group-hover:shadow-md transition-all duration-300 ${option.variant === 'primary' ? 'bg-primary hover:bg-primary/90 text-white' : ''
-                      }`}
-                    asChild
-                  >
-                    <Link href={option.href}>
-                      {option.action}
-                      <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                    </Link>
-                  </Button>
-                </CardContent>
-              </Card>
-            );
-          })}
+                <Button
+                  variant={option.variant === 'secondary' ? 'secondary' : 'default'}
+                  className={`w-full rounded-full font-bold group-hover:shadow-md transition-all duration-300 ${option.variant === 'default'
+                      ? 'bg-gradient-premium-orange text-white hover:opacity-90'
+                      : 'bg-white border-2 border-primary/10 hover:border-primary/30'
+                    }`}
+                  asChild
+                >
+                  <Link href={option.href}>
+                    {option.action}
+                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </Button>
+              </CardContent>
+            </Card>
+          ))}
         </div>
 
-        {/* Témoignage/Citation finale */}
-        <Card className="bg-white/80 backdrop-blur-sm border-primary/20 shadow-xl">
-          <CardContent className="p-8 lg:p-12 text-center">
-            <div className="max-w-4xl mx-auto">
-              <div className="text-4xl lg:text-6xl text-primary/30 mb-6">"</div>
+        {/* Témoignage/Citation finale - Style Premium */}
+        <Card className="bg-secondary/10 backdrop-blur-sm border-none shadow-sm rounded-[2.5rem] overflow-hidden relative">
+          {/* Decor */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-orange-100 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
 
-              <blockquote className="text-xl lg:text-2xl font-medium text-foreground mb-8 leading-relaxed">
+          <CardContent className="p-8 lg:p-16 text-center relative z-10">
+            <div className="max-w-4xl mx-auto">
+              <div className="text-6xl text-primary/20 font-serif mb-6 leading-none">"</div>
+
+              <blockquote className="text-2xl lg:text-3xl font-serif font-medium text-foreground mb-10 leading-relaxed italic">
                 Chaque bouchée raconte une histoire, chaque plat porte l'âme de nos traditions.
                 Venez vivre une expérience culinaire unique qui éveillera tous vos sens.
               </blockquote>
 
-              <div className="flex items-center justify-center space-x-4 mb-8">
-                <div className="flex space-x-1">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-                  ))}
-                </div>
-                <span className="text-muted-foreground">4.8/5 - Plus de 1000 avis clients</span>
-              </div>
 
-              <div className="flex items-center justify-center space-x-3">
-                <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center">
-                  <Heart className="w-6 h-6 text-primary" />
+              <div className="flex items-center justify-center gap-4">
+                <div className="w-16 h-16 bg-white rounded-full p-3 shadow-md border border-primary/10 flex items-center justify-center">
+                  <Image
+                    src="/images/icons/toque.webp"
+                    alt="Chef"
+                    width={40}
+                    height={40}
+                    className="w-10 h-10 object-contain"
+                  />
                 </div>
                 <div className="text-left">
-                  <div className="font-semibold text-lg">L'équipe O'Litchi</div>
-                  <div className="text-sm text-muted-foreground">Passionnés de cuisine authentique</div>
+                  <div className="font-serif font-bold text-xl text-foreground">L'équipe O'Litchi</div>
+                  <div className="text-sm text-primary font-medium uppercase tracking-wider">Passionnés de goût</div>
                 </div>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        {/* Urgence/Scarcité douce */}
+        {/* Urgence/Scarcité douce - Style Pill */}
         <div className="text-center mt-12">
-          <div className="inline-flex items-center bg-orange-100 text-orange-800 rounded-full px-4 py-2 text-sm font-medium">
-            <Calendar className="w-4 h-4 mr-2" />
-            <span>Planning de la semaine disponible - Places limitées sur certains créneaux</span>
+          <div className="inline-flex items-center bg-white border border-primary/20 rounded-full px-6 py-3 text-sm font-medium shadow-sm hover:shadow-md transition-all">
+            <Image
+              src="/images/icons/calendar.webp"
+              alt="Agenda"
+              width={20}
+              height={20}
+              className="w-5 h-5 mr-3 object-contain"
+            />
+            <span className="text-foreground/80">Planning de la semaine disponible — <span className="text-primary font-bold">Places limitées</span> sur certains créneaux</span>
           </div>
         </div>
       </div>

@@ -50,13 +50,47 @@ export function MenuTabs() {
         </div>
 
         <Tabs defaultValue="bokits" className="w-full">
-          <TabsList className="grid w-full grid-cols-5">
-            <TabsTrigger value="bokits">Bokits</TabsTrigger>
-            <TabsTrigger value="grillades">Grillades</TabsTrigger>
-            <TabsTrigger value="autres">Autres Plats</TabsTrigger>
-            <TabsTrigger value="petitesFaims">Petites Faims</TabsTrigger>
-            <TabsTrigger value="boissons">Boissons</TabsTrigger>
-          </TabsList>
+          {/* Container "Pill" Premium */}
+          <div className="flex justify-center w-full">
+            <TabsList className="inline-flex h-auto w-auto items-center justify-start rounded-full bg-secondary/50 p-1 text-muted-foreground border border-border/50 shadow-sm relative overflow-hidden">
+              {/* Note: Standard TabsTrigger has its own styles. We override/append to match the pill design. 
+                 Using 'bg-transparent' for inactive to show the container background.
+                 Separators are tricky with Shadcn components directly. We'll use a border-right approach for items except the last one, 
+                 and conditionally hide it if we can, or just let the active pill cover it. 
+              */}
+
+              <TabsTrigger
+                value="bokits"
+                className="rounded-full px-6 py-2.5 data-[state=active]:bg-gradient-premium-orange data-[state=active]:text-white transition-all text-base border-r border-muted-foreground/20 rounded-none first:rounded-l-full last:rounded-r-full data-[state=active]:border-none data-[state=active]:shadow-md hover:text-foreground"
+              >
+                Bokits
+              </TabsTrigger>
+              <TabsTrigger
+                value="grillades"
+                className="rounded-full px-6 py-2.5 data-[state=active]:bg-gradient-premium-orange data-[state=active]:text-white transition-all text-base border-r border-muted-foreground/20 rounded-none data-[state=active]:border-none data-[state=active]:shadow-md hover:text-foreground"
+              >
+                Grillades
+              </TabsTrigger>
+              <TabsTrigger
+                value="autres"
+                className="rounded-full px-6 py-2.5 data-[state=active]:bg-gradient-premium-orange data-[state=active]:text-white transition-all text-base border-r border-muted-foreground/20 rounded-none data-[state=active]:border-none data-[state=active]:shadow-md hover:text-foreground"
+              >
+                Autres Plats
+              </TabsTrigger>
+              <TabsTrigger
+                value="petitesFaims"
+                className="rounded-full px-6 py-2.5 data-[state=active]:bg-gradient-premium-orange data-[state=active]:text-white transition-all text-base border-r border-muted-foreground/20 rounded-none data-[state=active]:border-none data-[state=active]:shadow-md hover:text-foreground"
+              >
+                Petites Faims
+              </TabsTrigger>
+              <TabsTrigger
+                value="boissons"
+                className="rounded-full px-6 py-2.5 data-[state=active]:bg-gradient-premium-orange data-[state=active]:text-white transition-all text-base rounded-none last:rounded-r-full data-[state=active]:shadow-md hover:text-foreground"
+              >
+                Boissons
+              </TabsTrigger>
+            </TabsList>
+          </div>
 
           <TabsContent value="bokits" className="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {plats.bokits.map(renderItem)}

@@ -9,8 +9,10 @@ const cardVariants = cva(
     variants: {
       variant: {
         default: "bg-card text-card-foreground",
+        primary: "bg-primary/5 border-primary/20 hover:border-primary/40 hover:shadow-md",
         secondary: "bg-primary/10 border-white border-2 hover:shadow-xl hover:-translate-y-1",
-        bubble: "bg-[radial-gradient(circle_at_top_right,_var(--primary)_0%,_transparent_10%)] bg-primary/5 border-white/60 border-2 shadow-[inset_3px_3px_6px_#ffffff,inset_-3px_-3px_6px_rgba(0,0,0,0.05)] hover:shadow-xl hover:-translate-y-1",
+        bubble: "bg-primary/5 border-white/60 border-2 shadow-[inset_3px_3px_6px_#ffffff,inset_-3px_-3px_6px_rgba(0,0,0,0.05)] hover:shadow-xl hover:-translate-y-1",
+        product: "bg-card/10 border-2 border-[#e6d6c6]/50 shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-[2rem] hover:shadow-lg transition-all duration-300",
       },
     },
     defaultVariants: {

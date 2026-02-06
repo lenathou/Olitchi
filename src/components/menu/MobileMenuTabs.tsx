@@ -29,10 +29,10 @@ interface MobileMenuTabsProps {
   onCategoryChange: (category: MenuCategory) => void;
 }
 
-export function MobileMenuTabs({ 
-  categories, 
-  activeCategory, 
-  onCategoryChange 
+export function MobileMenuTabs({
+  categories,
+  activeCategory,
+  onCategoryChange
 }: MobileMenuTabsProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
@@ -42,15 +42,15 @@ export function MobileMenuTabs({
       const activeElement = scrollContainerRef.current.querySelector(
         `[data-category="${activeCategory}"]`
       ) as HTMLElement;
-      
+
       if (activeElement) {
         const container = scrollContainerRef.current;
         const containerWidth = container.offsetWidth;
         const elementLeft = activeElement.offsetLeft;
         const elementWidth = activeElement.offsetWidth;
-        
+
         const scrollLeft = elementLeft - (containerWidth / 2) + (elementWidth / 2);
-        
+
         container.scrollTo({
           left: scrollLeft,
           behavior: 'smooth'
@@ -62,7 +62,7 @@ export function MobileMenuTabs({
   return (
     <div className="py-4">
       {/* Scrollable tabs */}
-      <div 
+      <div
         ref={scrollContainerRef}
         className="flex gap-3 overflow-x-auto scrollbar-hide pb-2"
         style={{
@@ -72,7 +72,7 @@ export function MobileMenuTabs({
       >
         {categories.map((category) => {
           const isActive = activeCategory === category.id;
-          
+
           return (
             <button
               key={category.id}
@@ -80,9 +80,9 @@ export function MobileMenuTabs({
               onClick={() => onCategoryChange(category.id as MenuCategory)}
               className={`
                 flex-shrink-0 flex flex-col items-center gap-2 px-4 py-3 rounded-2xl transition-all duration-300
-                ${isActive 
-                  ? 'bg-orange-600 text-white shadow-lg scale-105' 
-                  : 'bg-white text-gray-600 hover:bg-gray-50 border border-gray-200'
+                ${isActive
+                  ? 'bg-primary text-primary-foreground shadow-lg scale-105'
+                  : 'bg-card text-muted-foreground hover:bg-secondary/50 border border-border/50'
                 }
               `}
             >
@@ -110,9 +110,9 @@ export function MobileMenuTabs({
             onClick={() => onCategoryChange(category.id as MenuCategory)}
             className={`
               w-2 h-2 rounded-full transition-all duration-300
-              ${activeCategory === category.id 
-                ? 'bg-orange-600 w-6' 
-                : 'bg-gray-300 hover:bg-gray-400'
+              ${activeCategory === category.id
+                ? 'bg-primary w-6'
+                : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
               }
             `}
             aria-label={`Aller à ${category.label}`}

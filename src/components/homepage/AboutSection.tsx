@@ -43,12 +43,12 @@ const stats = [
 
 const values = [
   {
-    image: '/images/toque.webp',
+    image: '/images/icons/toque.webp',
     title: 'Savoir-faire Authentique',
     description: 'Nos recettes traditionnelles afro-antillaises transmises de génération en génération'
   },
   {
-    image: '/images/coeur.webp',
+    image: '/images/icons/coeur.webp',
     title: 'Ingrédients Frais',
     description: 'Sélection rigoureuse de produits locaux et de saison pour une qualité optimale'
   },
@@ -123,6 +123,9 @@ export function AboutSection({ className = '' }: AboutSectionProps) {
         </div>
 
 
+
+
+
         {/* Values Section Header */}
         <div className="text-center mb-10 flex items-center justify-center gap-4">
           <span className="h-[1px] w-12 bg-primary/30 hidden md:block"></span>
@@ -156,41 +159,57 @@ export function AboutSection({ className = '' }: AboutSectionProps) {
           })}
         </div>
 
-        {/* Quote Block */}
-        <div className="relative max-w-4xl mx-auto mb-16">
-          {/* Decorative background/border for quote */}
-          <div className="absolute inset-0 bg-gradient-premium-tertiary rounded-3xl transform rotate-1 opacity-80 z-0 border border-[var(--premium-tertiary-border)] shadow-sm"></div>
-          <div className="relative z-10 p-8 lg:p-12 text-center">
-            <span className="block text-6xl text-primary/20 font-serif leading-none mb-4">“</span>
-            <blockquote className="text-xl lg:text-2xl font-serif font-medium text-foreground/90 italic mb-8 leading-relaxed">
+        {/* Quote Block - REFINED */}
+        <div className="relative max-w-4xl mx-auto mb-16 px-4">
+          <div className="relative bg-[#FBF7F1] rounded-3xl p-8 lg:p-12 text-center border border-[#E6D6C6] shadow-sm overflow-hidden">
+            {/* Decorative Elements */}
+            <div className="absolute top-6 left-6 text-primary/20">
+              <span className="text-2xl">✦</span>
+            </div>
+            <div className="absolute bottom-6 right-6 text-primary/20 opacity-50">
+              {/* Simple leaf-like shape or icon if available, using generic shape for now */}
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor" className="text-[#2F6B4F]/20">
+                <path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.66,19.7C8.58,15.06 10.13,10.5 18.88,11.63V11.63C20.4,8.19 18.33,4.91 16.12,3.12C14.7,1.96 11,1.1 11,1.1C11,1.1 11.5,4 11.5,5C12,6.5 13.5,6.5 13.5,6.5C13.5,6.5 11.23,7.18 10.15,9.45C9.07,11.71 10.13,13.78 10.13,13.78C10.13,13.78 13.75,8.22 17,8Z" />
+              </svg>
+            </div>
+
+            <span className="block text-6xl text-primary/20 font-serif leading-none mb-4 font-bold">“</span>
+            <blockquote className="text-xl lg:text-2xl font-serif font-medium text-foreground/90 italic mb-8 leading-relaxed relative z-10">
               Chaque plat que nous servons porte en lui l'âme de nos traditions
               et la passion de notre savoir-faire culinaire.
             </blockquote>
 
-            <div className="flex flex-col items-center justify-center gap-2">
-              <div className="bg-primary/10 p-2 rounded-full">
-                <ChefHat className="w-6 h-6 text-primary" />
-              </div>
-              <div className="text-center">
-                <div className="font-bold text-foreground">L'équipe O'Litchi</div>
-                <div className="text-xs uppercase tracking-wider text-muted-foreground">Passionnés de cuisine</div>
+            <div className="flex flex-col items-center justify-center gap-2 relative z-10">
+              <div className="flex items-center gap-3">
+                <div className="relative w-10 h-10 shrink-0">
+                  <Image
+                    src="/images/icons/toque.webp"
+                    alt="Toque de chef"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+                <div className="text-left">
+                  <div className="font-bold text-foreground">L'équipe O'Litchi</div>
+                  <div className="text-xs uppercase tracking-wider text-muted-foreground">Passionnés de cuisine</div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Call to action */}
-        <div className="flex justify-center">
-          <Button
-            size="lg"
-            variant="tertiary"
-            className="px-10 py-7 text-xl font-bold rounded-full shadow-lg hover:shadow-xl"
-            asChild
-          >
-            <Link href="/a-propos">
-              En savoir plus sur nous
-            </Link>
-          </Button>
+          {/* Call to action - Positioned absolutely at bottom center of quote block */}
+          <div className="absolute -bottom-7 left-1/2 -translate-x-1/2 z-20">
+            <Button
+              size="lg"
+              variant="default"
+              className="px-10 py-7 text-xl font-bold rounded-full shadow-lg hover:shadow-xl"
+              asChild
+            >
+              <Link href="/a-propos">
+                En savoir plus sur nous
+              </Link>
+            </Button>
+          </div>
         </div>
       </div>
     </section>
