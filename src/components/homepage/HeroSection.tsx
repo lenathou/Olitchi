@@ -4,12 +4,65 @@ import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import Link from 'next/link';
 import { MapPin } from 'lucide-react';
+import { motion, useReducedMotion } from 'framer-motion';
+import {
+  containerDesktop,
+  containerMobile,
+  decorFadeIn,
+  fadeSlideUp,
+  wordContainer,
+  wordReveal,
+  popIn,
+  buttonSpring,
+  floatingTransition,
+  buttonHover,
+  buttonTap,
+  dishHover,
+} from '@/lib/animations/hero-animations';
 
 interface HeroSectionProps {
   className?: string;
 }
 
+// ────────────────────────────────────────────────────
+// Composant utilitaire : Titre mot par mot (Desktop)
+// ────────────────────────────────────────────────────
+function AnimatedTitle() {
+  const line1 = ['Savourez', 'la'];
+  const highlight = ['Street', 'Food'];
+  const line2 = ['Afro-Antillaise'];
+
+  return (
+    <motion.h1
+      className="text-5xl font-extrabold leading-tight text-foreground font-serif"
+      variants={wordContainer}
+    >
+      {line1.map((word) => (
+        <motion.span key={word} variants={wordReveal} className="inline-block mr-[0.3em]">
+          {word}
+        </motion.span>
+      ))}
+      {highlight.map((word) => (
+        <motion.span key={word} variants={wordReveal} className="inline-block mr-[0.3em] text-primary">
+          {word}
+        </motion.span>
+      ))}
+      {line2.map((word) => (
+        <motion.span key={word} variants={wordReveal} className="inline-block mr-[0.3em]">
+          {word}
+        </motion.span>
+      ))}
+    </motion.h1>
+  );
+}
+
 export function HeroSection({ className = '' }: HeroSectionProps) {
+  const shouldReduceMotion = useReducedMotion();
+
+  // Si reduced motion → pas d'animations
+  const animationProps = shouldReduceMotion
+    ? {}
+    : { initial: 'hidden' as const, animate: 'visible' as const };
 
   return (
     <section className={`relative h-screen w-full flex flex-col justify-center overflow-hidden ${className}`}>
@@ -17,12 +70,14 @@ export function HeroSection({ className = '' }: HeroSectionProps) {
       {/* =========================================
           VERSION MOBILE (< md)
           ========================================= */}
-      <div className="relative w-full h-screen flex flex-col md:hidden overflow-hidden">
+      <motion.div
+        className="relative w-full h-screen flex flex-col md:hidden overflow-hidden"
+        variants={containerMobile}
+        {...animationProps}
+      >
 
         {/* Mobile Background */}
-        <div className="absolute inset-0 z-0">
-
-
+        <motion.div className="absolute inset-0 z-0" variants={decorFadeIn}>
           {/* Couche 2: Décoration (Overlay) */}
           <div className="absolute inset-0 pointer-events-none">
             <Image
@@ -34,33 +89,50 @@ export function HeroSection({ className = '' }: HeroSectionProps) {
               priority
             />
           </div>
-        </div>
+        </motion.div>
 
         {/* Mobile Content Container */}
         <div className="container relative z-10 mx-auto px-4 h-full flex flex-col pt-20">
 
           {/* Texte & Titre */}
-          <div className="flex flex-col space-y-4 text-left items-start z-20 w-[75%]">
-            <h1 className="text-4xl font-extrabold leading-tight text-foreground font-serif">
+          <motion.div
+            className="flex flex-col space-y-4 text-left items-start z-20 w-[75%]"
+            variants={fadeSlideUp}
+          >
+            {/* Mobile : titre en un bloc (pas de split mot par mot) */}
+            <motion.h1
+              className="text-4xl font-extrabold leading-tight text-foreground font-serif"
+              variants={fadeSlideUp}
+            >
               Savourez la <span className="text-primary">Street Food</span> Afro-Antillaise
-            </h1>
-            <p className="text-lg text-muted-foreground max-w-xs leading-relaxed">
+            </motion.h1>
+            <motion.p
+              className="text-lg text-muted-foreground max-w-xs leading-relaxed"
+              variants={fadeSlideUp}
+            >
               Découvrez des saveurs uniques et gourmandes inspirées des îles.
-            </p>
-            <div className="flex flex-row gap-3 pt-4 z-40">
+            </motion.p>
+            <motion.div className="flex flex-row gap-3 pt-4 z-40" variants={buttonSpring}>
               <Button asChild size="lg">
                 <Link href="/menu">
                   Voir le menu
                 </Link>
               </Button>
-              <Button asChild variant="secondary" size="lg">
-                <Link href="/commander">Commander</Link>
-              </Button>
-            </div>
-          </div>
+              <motion.div variants={buttonSpring}>
+                <Button asChild variant="secondary" size="lg">
+                  <Link href="/commander">Commander</Link>
+                </Button>
+              </motion.div>
+            </motion.div>
+          </motion.div>
 
-          {/* Atiéké Image (Positionné à droite hors-champ) */}
-          <div className="absolute top-[30%] right-[-40%] w-[100%] aspect-[4/3] z-10 pointer-events-none">
+          {/* Atiéké Image — floating léger (mobile: 1 seul plat flottant) */}
+          <motion.div
+            className="absolute top-[30%] right-[-40%] w-[100%] aspect-[4/3] z-10 pointer-events-none"
+            variants={popIn}
+            animate={shouldReduceMotion ? {} : { y: [-4, 4] }}
+            transition={shouldReduceMotion ? {} : floatingTransition(7, 0.5)}
+          >
             <Image
               src="/images/atieke-test.webp"
               alt="Plat Atiéké Poisson Braisé"
@@ -68,15 +140,18 @@ export function HeroSection({ className = '' }: HeroSectionProps) {
               className="object-contain drop-shadow-2xl"
               priority
             />
-          </div>
-
-
+          </motion.div>
 
           {/* Bottom Images Row (Mobile) */}
           <div className="absolute bottom-25 left-0 w-full h-[25vh] pb-2 z-30 pointer-events-none">
             <div className="relative w-full h-full flex items-end justify-center px-4 mb-2">
-              {/* Bokit (Left) - Premier plan */}
-              <div className="relative w-[30%] h-32 z-10 -mr-0 mb-[1px]">
+              {/* Bokit (Left) — floating léger */}
+              <motion.div
+                className="relative w-[30%] h-32 z-10 -mr-0 mb-[1px]"
+                variants={popIn}
+                animate={shouldReduceMotion ? {} : { y: [-3, 3] }}
+                transition={shouldReduceMotion ? {} : floatingTransition(8, 1)}
+              >
                 <Image
                   src="/images/bokit-hero1.webp"
                   alt="Burger Complet"
@@ -85,10 +160,13 @@ export function HeroSection({ className = '' }: HeroSectionProps) {
                   sizes="(max-width: 768px) 150px"
                   priority
                 />
-              </div>
+              </motion.div>
 
-              {/* Accras (Center) - Arrière plan */}
-              <div className="relative w-[40%] h-24 z-30 mb-0">
+              {/* Accras (Center) */}
+              <motion.div
+                className="relative w-[40%] h-24 z-30 mb-0"
+                variants={popIn}
+              >
                 <Image
                   src="/images/accras-hero1.webp"
                   alt="Accras de morue"
@@ -97,10 +175,13 @@ export function HeroSection({ className = '' }: HeroSectionProps) {
                   sizes="(max-width: 768px) 120px"
                   priority
                 />
-              </div>
+              </motion.div>
 
-              {/* Brochettes (Right) - Premier plan */}
-              <div className="relative w-[34%] h-28 z-20 -ml-4 mb-2">
+              {/* Brochettes (Right) */}
+              <motion.div
+                className="relative w-[34%] h-28 z-20 -ml-4 mb-2"
+                variants={popIn}
+              >
                 <Image
                   src="/images/brochettes-hero1.webp"
                   alt="Brochettes"
@@ -109,21 +190,25 @@ export function HeroSection({ className = '' }: HeroSectionProps) {
                   sizes="(max-width: 768px) 140px"
                   priority
                 />
-              </div>
+              </motion.div>
             </div>
           </div>
 
         </div>
-      </div>
+      </motion.div>
 
 
       {/* =========================================
           VERSION DESKTOP (>= md)
           ========================================= */}
-      <div className="hidden md:flex relative w-full h-full flex-col justify-center">
+      <motion.div
+        className="hidden md:flex relative w-full h-full flex-col justify-center"
+        variants={containerDesktop}
+        {...animationProps}
+      >
 
         {/* Desktop Background Overlay (Decoration Only) */}
-        <div className="absolute inset-0 z-0 pointer-events-none">
+        <motion.div className="absolute inset-0 z-0 pointer-events-none" variants={decorFadeIn}>
           <Image
             src="/images/hero-pics.webp"
             alt="Décoration O'Litchi (Palmiers, Soleil)"
@@ -131,7 +216,7 @@ export function HeroSection({ className = '' }: HeroSectionProps) {
             quality={95}
             priority
           />
-        </div>
+        </motion.div>
 
         {/* Desktop Main Content */}
         <div className="container relative z-10 mx-auto px-4 h-full flex flex-col mt-20">
@@ -139,89 +224,128 @@ export function HeroSection({ className = '' }: HeroSectionProps) {
           <div className="grid grid-cols-2 gap-8 items-center w-full">
 
             {/* Colonne Gauche: Texte */}
-            <div className="flex flex-col space-y-6 z-20 w-[80%] text-left items-start">
-              <h1 className="text-5xl font-extrabold leading-tight text-foreground font-serif">
-                Savourez la <span className="text-primary">Street Food</span> Afro-Antillaise
-              </h1>
-              <p className="text-xl text-muted-foreground max-w-lg leading-relaxed">
+            <motion.div className="flex flex-col space-y-6 z-20 w-[80%] text-left items-start">
+              {/* Titre mot par mot */}
+              <AnimatedTitle />
+
+              <motion.p
+                className="text-xl text-muted-foreground max-w-lg leading-relaxed"
+                variants={fadeSlideUp}
+              >
                 Découvrez des saveurs uniques et gourmandes inspirées des îles.
                 Commandez maintenant et laissez-vous emporter par notre cuisine créole.
-              </p>
+              </motion.p>
 
-              <div className="flex flex-row gap-6 mt-6 ml-25">
-                <Button
-                  asChild
-                  variant="secondary"
-                  size="lg"
-                  className="px-10 py-7 text-xl font-bold"
+              <motion.div className="flex flex-row gap-6 mt-6 ml-25" variants={buttonSpring}>
+                <motion.div
+                  whileHover={shouldReduceMotion ? {} : buttonHover}
+                  whileTap={shouldReduceMotion ? {} : buttonTap}
                 >
-                  <Link href="/menu">
-                    Voir le menu
-                  </Link>
-                </Button>
-                <Button
-                  asChild
-                  size="lg"
-                  className="px-10 py-7 text-xl font-bold"
+                  <Button
+                    asChild
+                    variant="secondary"
+                    size="lg"
+                    className="px-10 py-7 text-xl font-bold"
+                  >
+                    <Link href="/menu">
+                      Voir le menu
+                    </Link>
+                  </Button>
+                </motion.div>
+                {/* 80ms de décalage pour le 2e bouton */}
+                <motion.div
+                  variants={buttonSpring}
+                  whileHover={shouldReduceMotion ? {} : buttonHover}
+                  whileTap={shouldReduceMotion ? {} : buttonTap}
                 >
-                  <Link href="/localisation-horaires">
-                    <MapPin className="w-4 h-4 mr-2" />
-                    Nous Trouver
-                  </Link>
-                </Button>
-              </div>
-            </div>
+                  <Button
+                    asChild
+                    size="lg"
+                    className="px-10 py-7 text-xl font-bold"
+                  >
+                    <Link href="/localisation-horaires">
+                      <MapPin className="w-4 h-4 mr-2" />
+                      Nous Trouver
+                    </Link>
+                  </Button>
+                </motion.div>
+              </motion.div>
+            </motion.div>
 
-            {/* Colonne Droite: Atieke Image */}
+            {/* Colonne Droite: Atieke Image — floating + hover tilt */}
             <div className="relative z-20 h-full w-full pointer-events-none">
-              <div className="absolute top-70 right-[-5%] -translate-y-1/2 w-[700px] aspect-[4/3]">
+              <motion.div
+                className="absolute top-70 right-[-5%] -translate-y-1/2 w-[700px] aspect-[4/3] pointer-events-auto"
+                variants={popIn}
+                animate={shouldReduceMotion ? {} : { y: [-6, 6] }}
+                transition={shouldReduceMotion ? {} : floatingTransition(8)}
+                whileHover={shouldReduceMotion ? {} : dishHover}
+              >
                 <Image
                   src="/images/atieke-test.webp"
                   alt="Plat Atiéké Poisson Braisé"
                   fill
-                  className="object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
+                  className="object-contain drop-shadow-2xl"
                   priority
                 />
-              </div>
+              </motion.div>
             </div>
 
           </div>
         </div>
 
-        {/* Desktop Bottom Images */}
+        {/* Desktop Bottom Images — floating décalé + hover */}
         <div className="absolute bottom-0 left-0 w-full h-[35vh] z-30 pointer-events-none">
           <div className="container mx-auto relative h-full">
             {/* Bokit */}
-            <div className="absolute - left-[15%] w-[250px] aspect-square transform hover:scale-105 transition-transform duration-500 z-30">
+            <motion.div
+              className="absolute - left-[15%] w-[250px] aspect-square z-30 pointer-events-auto"
+              variants={popIn}
+              animate={shouldReduceMotion ? {} : { y: [-5, 5] }}
+              transition={shouldReduceMotion ? {} : floatingTransition(7, 0)}
+              whileHover={shouldReduceMotion ? {} : dishHover}
+            >
               <Image
                 src="/images/bokit-hero1.webp"
                 alt="Burger Complet"
                 fill
                 className="object-contain drop-shadow-xl"
               />
-            </div>
+            </motion.div>
             {/* Accras */}
-            <div className="absolute -bottom-4 left-[35%] w-[250px] aspect-square transform hover:scale-105 transition-transform duration-500 z-20">
+            <motion.div
+              className="absolute -bottom-4 left-[35%] w-[250px] aspect-square z-20 pointer-events-auto"
+              variants={popIn}
+              animate={shouldReduceMotion ? {} : { y: [-4, 4] }}
+              transition={shouldReduceMotion ? {} : floatingTransition(9, 0.5)}
+              whileHover={shouldReduceMotion ? {} : dishHover}
+            >
               <Image
                 src="/images/accras-hero1.webp"
                 alt="Accras de morue"
                 fill
                 className="object-contain drop-shadow-xl"
               />
-            </div>
+            </motion.div>
             {/* Brochettes */}
-            <div className="absolute bottom-4 left-[47%] w-[240px] aspect-square transform hover:scale-105 transition-transform duration-500 z-10">
+            <motion.div
+              className="absolute bottom-4 left-[47%] w-[240px] aspect-square z-10 pointer-events-auto"
+              variants={popIn}
+              animate={shouldReduceMotion ? {} : { y: [-6, 6] }}
+              transition={shouldReduceMotion ? {} : floatingTransition(10, 1)}
+              whileHover={shouldReduceMotion ? {} : dishHover}
+            >
               <Image
                 src="/images/brochettes-hero1.webp"
                 alt="Brochettes"
                 fill
                 className="object-contain drop-shadow-xl"
               />
-            </div>
+            </motion.div>
           </div>
         </div>
 
-      </div>
+      </motion.div>
 
     </section>
   );

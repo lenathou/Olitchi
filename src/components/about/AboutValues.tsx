@@ -5,17 +5,17 @@ const values = [
     {
         title: 'Authenticité',
         description: 'Recettes traditionnelles et ingrédients authentiques pour préserver le goût véritable des Antilles.',
-        icon: '/images/icons/book.webp'
+        icon: '/images/icons/satisfied.webp'
     },
     {
         title: 'Convivialité',
         description: 'Un accueil chaleureux et une ambiance familiale pour partager ensemble l\'amour de la cuisine antillaise.',
-        icon: '/images/icons/coeur.webp'
+        icon: '/images/icons/convivial.webp'
     },
     {
         title: 'Qualité',
         description: 'Produits frais sélectionnés avec soin et préparation artisanale pour une qualité irréprochable.',
-        icon: '/images/icons/toque-2.webp'
+        icon: '/images/icons/quality.webp'
     }
 ];
 

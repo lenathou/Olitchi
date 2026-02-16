@@ -63,7 +63,7 @@ export function ModernMenuSection() {
       </div>
 
       {/* Navigation Sticky */}
-      <div className="sticky top-0 z-30 bg-background/95 backdrop-blur-xl border-b border-border/40 shadow-sm transition-all duration-300">
+      <div >
         <div className="container mx-auto px-4 py-4">
           {isMobile ? (
             <MobileMenuTabs
