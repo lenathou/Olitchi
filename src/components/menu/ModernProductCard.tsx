@@ -39,7 +39,6 @@ export function ModernProductCard({
       <Card
         variant="product"
         className="flex flex-row items-center gap-4 p-4 text-left"
-        style={{ animationDelay: `${index * 100}ms` }}
       >
         {/* Image - Rounded (Left) */}
         <div className="relative w-28 h-28 shrink-0">
@@ -119,7 +118,6 @@ export function ModernProductCard({
     <Card
       variant="secondary"
       className="group h-full flex flex-col overflow-hidden hover:-translate-y-2 transition-all duration-500 relative rounded-3xl"
-      style={{ animationDelay: `${index * 100}ms` }}
     >
       {/* Image Container */}
       <div className="relative aspect-[4/3] overflow-hidden rounded-t-3xl">

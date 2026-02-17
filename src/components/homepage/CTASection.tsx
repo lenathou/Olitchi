@@ -18,7 +18,7 @@ import {
   scaleReveal,
   cardHover,
   scrollRevealConfig,
-} from '@/lib/animations/shared-animations';
+} from '@/lib/animations/homepage/shared-animations';
 
 interface CTASectionProps {
   className?: string;
@@ -200,24 +200,6 @@ export function CTASection({ className = '' }: CTASectionProps) {
               </div>
             </CardContent>
           </Card>
-        </motion.div>
-
-        {/* ── Pill urgence (scroll reveal) ── */}
-        <motion.div
-          className="text-center mt-12"
-          variants={fadeUp}
-          {...revealProps}
-        >
-          <div className="inline-flex items-center bg-white border border-primary/20 rounded-full px-6 py-3 text-sm font-medium shadow-sm hover:shadow-md transition-all">
-            <Image
-              src="/images/icons/calendar.webp"
-              alt="Agenda"
-              width={20}
-              height={20}
-              className="w-5 h-5 mr-3 object-contain"
-            />
-            <span className="text-foreground/80">Planning de la semaine disponible — <span className="text-primary font-bold">Places limitées</span> sur certains créneaux</span>
-          </div>
         </motion.div>
       </div>
     </section>

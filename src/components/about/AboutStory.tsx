@@ -1,12 +1,23 @@
+'use client';
+
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
+import { motion, useReducedMotion } from 'framer-motion';
+import { headerStagger, fadeUp, fadeLeft, fadeRight, scrollRevealConfig } from '@/lib/animations/a-propos/about-animations';
 
 export function AboutStory() {
+    const shouldReduceMotion = useReducedMotion();
+    const revealProps = shouldReduceMotion ? {} : scrollRevealConfig;
+
     return (
         <section className="py-16 md:py-24">
             <div className="container mx-auto px-4">
-                <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
-                    <div>
+                <motion.div
+                    className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center"
+                    variants={shouldReduceMotion ? undefined : headerStagger}
+                    {...revealProps}
+                >
+                    <motion.div variants={shouldReduceMotion ? undefined : fadeLeft}>
                         <div className="inline-flex items-center gap-2 bg-primary/10 text-primary rounded-full px-4 py-2 mb-6 shadow-sm border border-primary/20">
                             <div className="relative w-5 h-5">
                                 <Image src="/images/icons/about.webp" alt="" fill className="object-contain" />
@@ -29,9 +40,9 @@ export function AboutStory() {
                                 gustative unique, alliant tradition et modernité dans un cadre convivial.
                             </p>
                         </div>
-                    </div>
+                    </motion.div>
 
-                    <div className="relative">
+                    <motion.div className="relative" variants={shouldReduceMotion ? undefined : fadeRight}>
                         {/* Decorative elements */}
                         <div className="absolute -top-6 -right-6 w-24 h-24 bg-primary/10 rounded-full blur-2xl" />
                         <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-secondary/30 rounded-full blur-2xl" />
@@ -46,8 +57,8 @@ export function AboutStory() {
                                 quality={95}
                             />
                         </div>
-                    </div>
-                </div>
+                    </motion.div>
+                </motion.div>
             </div>
         </section>
     );

@@ -9,6 +9,14 @@ import { DesktopMenuTabs } from './DesktopMenuTabs';
 import { SectionBadge } from '@/components/ui/section-badge';
 import { ChefHat } from 'lucide-react';
 import Image from 'next/image';
+import { motion, useReducedMotion, AnimatePresence } from 'framer-motion';
+import {
+  headerStagger,
+  fadeUp,
+  pillReveal,
+  gridStagger,
+  cardReveal,
+} from '@/lib/animations/menu/menu-animations';
 
 type MenuCategory = 'bokits' | 'grillades' | 'autres' | 'petitesFaims' | 'boissons';
 
@@ -41,28 +49,52 @@ const categories = [
 export function ModernMenuSection() {
   const [activeCategory, setActiveCategory] = useState<MenuCategory>('bokits');
   const isMobile = useIsMobile();
+  const shouldReduceMotion = useReducedMotion();
 
   const currentItems = menuData[activeCategory] || [];
+
+  const motionProps = shouldReduceMotion
+    ? {}
+    : { initial: 'hidden' as const, animate: 'visible' as const };
+
+  const scrollRevealProps = shouldReduceMotion
+    ? {}
+    : {
+      initial: 'hidden' as const,
+      whileInView: 'visible' as const,
+      viewport: { once: true, amount: 0.3 },
+    };
 
   return (
     <div className="min-h-screen">
       {/* Header Premium */}
-      <div className="pt-12 pb-8 lg:pt-16 lg:pb-12 relative">
+      <motion.div
+        className="pt-12 pb-8 lg:pt-16 lg:pb-12 relative"
+        variants={shouldReduceMotion ? undefined : headerStagger}
+        {...motionProps}
+      >
         <div className="container mx-auto px-4 text-center relative z-10">
-          <SectionBadge icon={ChefHat} label="La Carte" />
+          <motion.div variants={shouldReduceMotion ? undefined : fadeUp}>
+            <SectionBadge icon={ChefHat} label="La Carte" />
+          </motion.div>
 
-          <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold font-serif mb-6 text-foreground">
+          <motion.h1
+            className="text-4xl md:text-5xl lg:text-7xl font-bold font-serif mb-6 text-foreground"
+            variants={shouldReduceMotion ? undefined : fadeUp}
+          >
             Notre <span className="text-primary italic">Menu</span>
-          </h1>
+          </motion.h1>
 
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          <motion.p
+            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed"
+            variants={shouldReduceMotion ? undefined : fadeUp}
+          >
             Découvrez nos spécialités afro-antillaises préparées avec passion.
             Des saveurs authentiques pour un voyage culinaire unique.
-          </p>
+          </motion.p>
         </div>
-      </div>
+      </motion.div>
 
-      {/* Navigation Sticky */}
       <div >
         <div className="container mx-auto px-4 py-4">
           {isMobile ? (
@@ -83,40 +115,33 @@ export function ModernMenuSection() {
 
       {/* Content */}
       <div className="container mx-auto px-4 py-12 lg:py-16">
-        {/* Category Info Pill */}
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-3 bg-white rounded-full pl-2 pr-6 py-2 shadow-sm border border-primary/10">
-            <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-xl">
-              {categories.find(cat => cat.id === activeCategory)?.emoji}
-            </div>
-            <div className="flex flex-col text-left">
-              <span className="font-bold text-foreground leading-tight">
-                {categories.find(cat => cat.id === activeCategory)?.label}
-              </span>
-              <span className="text-xs text-muted-foreground font-medium">
-                {currentItems.length} produit{currentItems.length > 1 ? 's' : ''} disponibles
-              </span>
-            </div>
-          </div>
-        </div>
 
-        {/* Products Grid */}
-        <div className={`
-          grid gap-6 lg:gap-8
-          ${isMobile
-            ? 'grid-cols-1'
-            : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
-          }
-        `}>
+        {/* Products Grid — stagger reveal on category change */}
+        <motion.div
+          className={`
+            grid gap-6 lg:gap-8
+            ${isMobile
+              ? 'grid-cols-1'
+              : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
+            }
+          `}
+          key={activeCategory + '-grid'}
+          variants={shouldReduceMotion ? undefined : gridStagger}
+          {...motionProps}
+        >
           {currentItems.map((item, index) => (
-            <ModernProductCard
+            <motion.div
               key={item.id}
-              {...item}
-              index={index}
-              isMobile={isMobile}
-            />
+              variants={shouldReduceMotion ? undefined : cardReveal}
+            >
+              <ModernProductCard
+                {...item}
+                index={index}
+                isMobile={isMobile}
+              />
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Empty State */}
         {currentItems.length === 0 && (

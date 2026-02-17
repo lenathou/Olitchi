@@ -1,8 +1,19 @@
+'use client';
+
 import { MapPin } from 'lucide-react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { scaleReveal, scrollRevealConfig } from '@/lib/animations/localisation/localisation-animations';
 
 export function LocalisationArea() {
+    const shouldReduceMotion = useReducedMotion();
+    const revealProps = shouldReduceMotion ? {} : scrollRevealConfig;
+
     return (
-        <section className="px-4 mb-20 text-center">
+        <motion.section
+            className="px-4 mb-20 text-center"
+            variants={shouldReduceMotion ? undefined : scaleReveal}
+            {...revealProps}
+        >
             <div className="container mx-auto max-w-3xl">
                 <div className="bg-secondary/20 rounded-[2.5rem] p-8 md:p-12 border border-secondary/30">
                     <div className="inline-flex items-center justify-center w-16 h-16 bg-white rounded-full shadow-sm mb-6 text-primary">
@@ -16,6 +27,6 @@ export function LocalisationArea() {
                     </p>
                 </div>
             </div>
-        </section>
+        </motion.section>
     );
 }

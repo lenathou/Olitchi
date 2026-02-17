@@ -14,11 +14,9 @@ import {
   wordReveal,
   popIn,
   buttonSpring,
-  floatingTransition,
   buttonHover,
   buttonTap,
-  dishHover,
-} from '@/lib/animations/hero-animations';
+} from '@/lib/animations/homepage/hero-animations';
 
 interface HeroSectionProps {
   className?: string;
@@ -126,31 +124,26 @@ export function HeroSection({ className = '' }: HeroSectionProps) {
             </motion.div>
           </motion.div>
 
-          {/* Atiéké Image — floating léger (mobile: 1 seul plat flottant) */}
+          {/* Atiéké Image — entry popIn uniquement */}
           <motion.div
             className="absolute top-[30%] right-[-40%] w-[100%] aspect-[4/3] z-10 pointer-events-none"
             variants={popIn}
-            animate={shouldReduceMotion ? {} : { y: [-4, 4] }}
-            transition={shouldReduceMotion ? {} : floatingTransition(7, 0.5)}
           >
             <Image
               src="/images/atieke-test.webp"
               alt="Plat Atiéké Poisson Braisé"
               fill
               className="object-contain drop-shadow-2xl"
-              priority
             />
           </motion.div>
 
           {/* Bottom Images Row (Mobile) */}
           <div className="absolute bottom-25 left-0 w-full h-[25vh] pb-2 z-30 pointer-events-none">
             <div className="relative w-full h-full flex items-end justify-center px-4 mb-2">
-              {/* Bokit (Left) — floating léger */}
+              {/* Bokit (Left) */}
               <motion.div
                 className="relative w-[30%] h-32 z-10 -mr-0 mb-[1px]"
                 variants={popIn}
-                animate={shouldReduceMotion ? {} : { y: [-3, 3] }}
-                transition={shouldReduceMotion ? {} : floatingTransition(8, 1)}
               >
                 <Image
                   src="/images/bokit-hero1.webp"
@@ -158,7 +151,6 @@ export function HeroSection({ className = '' }: HeroSectionProps) {
                   fill
                   className="object-contain drop-shadow-xl scale-110 origin-bottom-left"
                   sizes="(max-width: 768px) 150px"
-                  priority
                 />
               </motion.div>
 
@@ -173,7 +165,6 @@ export function HeroSection({ className = '' }: HeroSectionProps) {
                   fill
                   className="object-contain drop-shadow-lg scale-100"
                   sizes="(max-width: 768px) 120px"
-                  priority
                 />
               </motion.div>
 
@@ -188,7 +179,6 @@ export function HeroSection({ className = '' }: HeroSectionProps) {
                   fill
                   className="object-contain drop-shadow-xl scale-110 origin-bottom-right"
                   sizes="(max-width: 768px) 140px"
-                  priority
                 />
               </motion.div>
             </div>
@@ -207,7 +197,7 @@ export function HeroSection({ className = '' }: HeroSectionProps) {
         {...animationProps}
       >
 
-        {/* Desktop Background Overlay (Decoration Only) */}
+        {/* Desktop Background Overlay (Decoration Only) — seule image priority */}
         <motion.div className="absolute inset-0 z-0 pointer-events-none" variants={decorFadeIn}>
           <Image
             src="/images/hero-pics.webp"
@@ -252,7 +242,6 @@ export function HeroSection({ className = '' }: HeroSectionProps) {
                     </Link>
                   </Button>
                 </motion.div>
-                {/* 80ms de décalage pour le 2e bouton */}
                 <motion.div
                   variants={buttonSpring}
                   whileHover={shouldReduceMotion ? {} : buttonHover}
@@ -272,21 +261,17 @@ export function HeroSection({ className = '' }: HeroSectionProps) {
               </motion.div>
             </motion.div>
 
-            {/* Colonne Droite: Atieke Image — floating + hover tilt */}
+            {/* Colonne Droite: Atieke Image — entry popIn uniquement */}
             <div className="relative z-20 h-full w-full pointer-events-none">
               <motion.div
-                className="absolute top-70 right-[-5%] -translate-y-1/2 w-[700px] aspect-[4/3] pointer-events-auto"
+                className="absolute top-70 right-[-5%] -translate-y-1/2 w-[700px] aspect-[4/3]"
                 variants={popIn}
-                animate={shouldReduceMotion ? {} : { y: [-6, 6] }}
-                transition={shouldReduceMotion ? {} : floatingTransition(8)}
-                whileHover={shouldReduceMotion ? {} : dishHover}
               >
                 <Image
                   src="/images/atieke-test.webp"
                   alt="Plat Atiéké Poisson Braisé"
                   fill
                   className="object-contain drop-shadow-2xl"
-                  priority
                 />
               </motion.div>
             </div>
@@ -294,16 +279,13 @@ export function HeroSection({ className = '' }: HeroSectionProps) {
           </div>
         </div>
 
-        {/* Desktop Bottom Images — floating décalé + hover */}
+        {/* Desktop Bottom Images — entry popIn uniquement */}
         <div className="absolute bottom-0 left-0 w-full h-[35vh] z-30 pointer-events-none">
           <div className="container mx-auto relative h-full">
             {/* Bokit */}
             <motion.div
-              className="absolute - left-[15%] w-[250px] aspect-square z-30 pointer-events-auto"
+              className="absolute - left-[15%] w-[250px] aspect-square z-30"
               variants={popIn}
-              animate={shouldReduceMotion ? {} : { y: [-5, 5] }}
-              transition={shouldReduceMotion ? {} : floatingTransition(7, 0)}
-              whileHover={shouldReduceMotion ? {} : dishHover}
             >
               <Image
                 src="/images/bokit-hero1.webp"
@@ -314,11 +296,8 @@ export function HeroSection({ className = '' }: HeroSectionProps) {
             </motion.div>
             {/* Accras */}
             <motion.div
-              className="absolute -bottom-4 left-[35%] w-[250px] aspect-square z-20 pointer-events-auto"
+              className="absolute -bottom-4 left-[35%] w-[250px] aspect-square z-20"
               variants={popIn}
-              animate={shouldReduceMotion ? {} : { y: [-4, 4] }}
-              transition={shouldReduceMotion ? {} : floatingTransition(9, 0.5)}
-              whileHover={shouldReduceMotion ? {} : dishHover}
             >
               <Image
                 src="/images/accras-hero1.webp"
@@ -329,11 +308,8 @@ export function HeroSection({ className = '' }: HeroSectionProps) {
             </motion.div>
             {/* Brochettes */}
             <motion.div
-              className="absolute bottom-4 left-[47%] w-[240px] aspect-square z-10 pointer-events-auto"
+              className="absolute bottom-4 left-[47%] w-[240px] aspect-square z-10"
               variants={popIn}
-              animate={shouldReduceMotion ? {} : { y: [-6, 6] }}
-              transition={shouldReduceMotion ? {} : floatingTransition(10, 1)}
-              whileHover={shouldReduceMotion ? {} : dishHover}
             >
               <Image
                 src="/images/brochettes-hero1.webp"

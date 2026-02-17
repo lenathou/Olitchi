@@ -19,9 +19,9 @@ import {
   fadeRight,
   scaleReveal,
   cardHover,
-  imageHover,
+
   scrollRevealConfig,
-} from '@/lib/animations/shared-animations';
+} from '@/lib/animations/homepage/shared-animations';
 
 interface AboutSectionProps {
   className?: string;
@@ -137,9 +137,8 @@ export function AboutSection({ className = '' }: AboutSectionProps) {
 
           {/* Food Truck Image */}
           <motion.div className="order-1 lg:order-2 relative" variants={fadeRight}>
-            <motion.div
+            <div
               className="relative h-64 lg:h-80 w-full rounded-2xl overflow-hidden shadow-xl border-4 border-white transform rotate-1 hover:rotate-0 transition-transform duration-500"
-              whileHover={shouldReduceMotion ? undefined : imageHover}
             >
               <Image
                 src="/images/truck.webp"
@@ -148,7 +147,7 @@ export function AboutSection({ className = '' }: AboutSectionProps) {
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
-            </motion.div>
+            </div>
             <div className="absolute -bottom-5 right-4 z-20">
               <Badge className="bg-primary hover:bg-primary/90 text-white px-4 py-2 text-sm font-bold shadow-lg rounded-full">
                 <Truck className="w-4 h-4 mr-2" />
@@ -257,7 +256,7 @@ export function AboutSection({ className = '' }: AboutSectionProps) {
           </div>
         </motion.div>
       </div>
-    </section>
+    </section >
   );
 }
 

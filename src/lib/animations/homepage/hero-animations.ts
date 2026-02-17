@@ -29,17 +29,15 @@ export const containerMobile: Variants = {
 // §1  Éléments d'entrée
 // ──────────────────────────────────────────────
 
-/** Décoration / background : fade + scale + blur dissipation */
+/** Décoration / background : fade + scale (blur retiré pour perf mobile) */
 export const decorFadeIn: Variants = {
     hidden: {
         opacity: 0,
         scale: 0.98,
-        filter: 'blur(10px)',
     },
     visible: {
         opacity: 1,
         scale: 1,
-        filter: 'blur(0px)',
         transition: {
             duration: 0.8,
             ease: [0.25, 0.46, 0.45, 0.94], // easeOutQuad
@@ -88,7 +86,7 @@ export const wordReveal: Variants = {
     },
 };
 
-/** Pop-in premium pour les images de plats */
+/** Pop-in premium pour les images de plats (entrée uniquement) */
 export const popIn: Variants = {
     hidden: {
         opacity: 0,
@@ -124,22 +122,7 @@ export const buttonSpring: Variants = {
 };
 
 // ──────────────────────────────────────────────
-// §2  Micro-animations continues (floating)
-// ──────────────────────────────────────────────
-
-/** Floating lent sur l'axe Y — à utiliser via `animate` et non via variants */
-export const floatingTransition = (duration: number, delay: number = 0): Transition => ({
-    y: {
-        duration,
-        repeat: Infinity,
-        repeatType: 'reverse',
-        ease: 'easeInOut',
-        delay,
-    },
-});
-
-// ──────────────────────────────────────────────
-// §3  Hover interactions (Desktop)
+// §2  Hover interactions (Desktop)
 // ──────────────────────────────────────────────
 
 /** Hover CTA : scale + glow */
@@ -151,12 +134,4 @@ export const buttonHover = {
 
 export const buttonTap = {
     scale: 0.98,
-};
-
-/** Hover image plat : scale + léger tilt */
-export const dishHover = {
-    scale: 1.06,
-    rotateX: 3,
-    rotateY: -3,
-    transition: { duration: 0.3, ease: 'easeOut' as const },
 };

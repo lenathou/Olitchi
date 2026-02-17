@@ -25,7 +25,7 @@ import {
   slideDragging,
   dotActive,
   dotInactive,
-} from '@/lib/animations/menu-animations';
+} from '@/lib/animations/homepage/menu-animations';
 
 interface MenuSectionProps {
   className?: string;

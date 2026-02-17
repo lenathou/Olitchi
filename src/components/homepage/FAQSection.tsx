@@ -19,7 +19,7 @@ import {
   fadeRight,
   scaleReveal,
   scrollRevealConfig,
-} from '@/lib/animations/shared-animations';
+} from '@/lib/animations/homepage/shared-animations';
 
 interface FAQSectionProps {
   className?: string;

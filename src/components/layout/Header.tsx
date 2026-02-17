@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { MapPin } from "lucide-react";
@@ -10,13 +10,31 @@ import { MobileNavPremium } from "./MobileNavPremium";
 
 export default function Header() {
 	const [isScrolled, setIsScrolled] = useState(false);
+	const isScrolledRef = useRef(false);
+	const rafId = useRef<number | null>(null);
 
 	useEffect(() => {
 		const handleScroll = () => {
-			setIsScrolled(window.scrollY > 20);
+			// Throttle via rAF — une seule exécution par frame
+			if (rafId.current !== null) return;
+			rafId.current = requestAnimationFrame(() => {
+				const scrolled = window.scrollY > 20;
+				// Guard : ne setState que si la valeur change
+				if (scrolled !== isScrolledRef.current) {
+					isScrolledRef.current = scrolled;
+					setIsScrolled(scrolled);
+				}
+				rafId.current = null;
+			});
 		};
-		window.addEventListener("scroll", handleScroll);
-		return () => window.removeEventListener("scroll", handleScroll);
+
+		window.addEventListener("scroll", handleScroll, { passive: true });
+		return () => {
+			window.removeEventListener("scroll", handleScroll);
+			if (rafId.current !== null) {
+				cancelAnimationFrame(rafId.current);
+			}
+		};
 	}, []);
 
 	return (
@@ -69,4 +87,3 @@ export default function Header() {
 		</header>
 	);
 }
-

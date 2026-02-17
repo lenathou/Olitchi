@@ -1,20 +1,30 @@
+'use client';
+
 import { MapPin, Clock, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import Link from 'next/link';
 import { SCHEDULE, TODAY_DATA } from '@/data/schedule';
+import { motion, useReducedMotion } from 'framer-motion';
+import { scaleReveal, scrollRevealConfig } from '@/lib/animations/localisation/localisation-animations';
 
 export function LocalisationToday() {
-    const currentDayIndex = new Date().getDay(); // 0 = Dimanche, 1 = Lundi...
-    // Ajustement pour matcher l'index du tableau SCHEDULE (0 = Lundi dans notre tableau)
+    const shouldReduceMotion = useReducedMotion();
+    const revealProps = shouldReduceMotion ? {} : scrollRevealConfig;
+
+    const currentDayIndex = new Date().getDay();
     const scheduleIndex = currentDayIndex === 0 ? 6 : currentDayIndex - 1;
 
-    // Utilisons les vraies données du jour si possible, sinon fallback sur le schedule
     const realToday = SCHEDULE[scheduleIndex] ?? SCHEDULE[0] ?? { location: 'Fermé', hours: '-', isOpen: false, day: 'Unknown' };
     const isTodayOpen = realToday?.isOpen;
 
     return (
-        <section id="today" className="px-4 mb-16">
+        <motion.section
+            id="today"
+            className="px-4 mb-16"
+            variants={shouldReduceMotion ? undefined : scaleReveal}
+            {...revealProps}
+        >
             <div className="container mx-auto max-w-3xl">
                 <Card variant="product" className="relative overflow-hidden border-2 border-primary/20 bg-card p-8 md:p-10 shadow-lg text-center">
 
@@ -72,6 +82,6 @@ export function LocalisationToday() {
                     )}
                 </Card>
             </div>
-        </section>
+        </motion.section>
     );
 }

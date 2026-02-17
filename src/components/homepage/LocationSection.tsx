@@ -20,7 +20,7 @@ import {
   fadeRight,
   cardHover,
   scrollRevealConfig,
-} from '@/lib/animations/shared-animations';
+} from '@/lib/animations/homepage/shared-animations';
 
 interface LocationSectionProps {
   className?: string;

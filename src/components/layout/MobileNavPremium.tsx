@@ -8,7 +8,7 @@ import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetClose } from '@/com
 import { Menu, Phone, ChevronRight, X } from 'lucide-react';
 import { mainNavigation } from '@/constants/navigation';
 import { PremiumDivider } from '@/components/ui/PremiumDivider';
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import type { Variants } from 'framer-motion';
 
 // Icon mapping matching the design
@@ -20,15 +20,6 @@ const iconMap = {
 } as const;
 
 // ── Animation variants ──────────────────────────
-
-const overlayVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-        opacity: 1,
-        transition: { duration: 0.3 },
-    },
-    exit: { opacity: 0, transition: { duration: 0.2 } },
-};
 
 const containerVariants: Variants = {
     hidden: {},

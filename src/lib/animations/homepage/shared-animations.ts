@@ -127,11 +127,7 @@ export const cardHover = {
     transition: { duration: 0.25, ease: 'easeOut' as const },
 };
 
-/** Hover image : scale subtil */
-export const imageHover = {
-    scale: 1.04,
-    transition: { duration: 0.4, ease: 'easeOut' as const },
-};
+
 
 // ──────────────────────────────────────────────
 // Utilitaires
