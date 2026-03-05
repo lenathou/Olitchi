@@ -61,7 +61,7 @@ const quickInfo = [
     details: 'Les Ulis, Évry, Corbeil et environs'
   },
   {
-    icon: '/images/icons/contact.webp',
+    icon: '/images/icons/phone.webp',
     title: 'Commandes',
     description: 'Sur place uniquement',
     details: 'Paiement CB et espèces acceptés'

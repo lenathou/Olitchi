@@ -25,7 +25,7 @@ export default function Footer() {
 						<div className="space-y-2 text-muted-foreground">
 							<div className="flex items-center">
 								<Phone className="h-4 w-4 mr-2" />
-								<span>06 12 34 56 78</span>
+								<span>06 41 46 26 42</span>
 							</div>
 							<div className="flex items-center">
 								<MapPin className="h-4 w-4 mr-2" />

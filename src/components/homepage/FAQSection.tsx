@@ -30,49 +30,49 @@ const faqData = [
     id: 'commande',
     question: 'Comment passer commande ?',
     answer: 'Vous pouvez passer commande directement sur place auprès de notre équipe. Nous acceptons les paiements en espèces et par carte bancaire. Pour les événements privés, contactez-nous à l\'avance pour organiser votre commande.',
-    iconSrc: '/images/icons/contact.webp',
+    iconSrc: '/images/icons/check-list.webp',
     category: 'Commande'
   },
   {
     id: 'vegetarien',
     question: 'Proposez-vous des options végétariennes ?',
     answer: 'Oui ! Nous proposons plusieurs options végétariennes dans notre menu, notamment des bokits aux légumes grillés et des accompagnements variés. Tous nos plats végétariens sont préparés avec des ingrédients frais et savoureux.',
-    iconSrc: '/images/icons/local.webp',
+    iconSrc: '/images/icons/leaf.webp',
     category: 'Menu'
   },
   {
     id: 'evenements',
     question: 'Peut-on vous réserver pour un événement ?',
     answer: 'Absolument ! Nous proposons nos services pour les événements privés, mariages, fêtes d\'entreprise, et festivités. Contactez-nous pour discuter de vos besoins et obtenir un devis personnalisé.',
-    iconSrc: '/images/icons/calendar.webp',
+    iconSrc: '/images/icons/calendar2.webp',
     category: 'Événements'
   },
   {
     id: 'horaires',
     question: 'Quels sont vos horaires d\'ouverture ?',
     answer: 'Nous sommes ouverts du lundi au dimanche avec des horaires variables selon notre localisation. Consultez notre planning hebdomadaire ou suivez-nous sur les réseaux sociaux pour connaître notre position en temps réel.',
-    iconSrc: '/images/icons/calendar.webp',
+    iconSrc: '/images/icons/clock.webp',
     category: 'Horaires'
   },
   {
     id: 'paiement',
     question: 'Quels moyens de paiement acceptez-vous ?',
     answer: 'Nous acceptons les paiements en espèces et par carte bancaire (sans contact également). Pour les événements privés, nous pouvons également accepter les virements bancaires.',
-    iconSrc: '/images/icons/contact.webp',
+    iconSrc: '/images/icons/credit-card.webp',
     category: 'Paiement'
   },
   {
     id: 'allergenes',
     question: 'Informations sur les allergènes ?',
     answer: 'Nous prenons les allergies alimentaires très au sérieux. N\'hésitez pas à nous informer de vos allergies lors de votre commande. Nos équipes pourront vous renseigner sur la composition de nos plats et vous proposer des alternatives adaptées.',
-    iconSrc: '/images/icons/warning.webp',
+    iconSrc: '/images/icons/warning2.webp',
     category: 'Santé'
   },
   {
     id: 'localisation',
     question: 'Comment connaître votre position exacte ?',
     answer: 'Notre planning hebdomadaire est disponible sur notre site web et nos réseaux sociaux. Nous mettons également à jour notre position en temps réel sur nos pages Facebook et Instagram.',
-    iconSrc: '/images/icons/local.webp',
+    iconSrc: '/images/icons/map.webp',
     category: 'Localisation'
   },
   {

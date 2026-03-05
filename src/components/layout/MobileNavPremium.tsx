@@ -215,7 +215,7 @@ export function MobileNavPremium() {
                                 <Phone className="h-5 w-5" />
                             </div>
                             <div className="flex flex-col">
-                                <span className="font-bold text-foreground">+33 6 12 34 56 78</span>
+                                <span className="font-bold text-foreground">06 41 46 26 42</span>
                                 <span className="text-sm text-muted-foreground">contact@olitchy.fr</span>
                             </div>
                         </motion.div>
