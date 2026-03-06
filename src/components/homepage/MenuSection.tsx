@@ -7,7 +7,6 @@ import { Badge } from '@/components/ui/badge';
 import { Star, ChefHat, Flame, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { plats } from '@/data/plats';
 import { useIsMobile } from '@/lib/hooks';
 import useEmblaCarousel from 'embla-carousel-react';
 import { useCallback, useEffect, useState } from 'react';
@@ -29,6 +28,14 @@ import {
 
 interface MenuSectionProps {
   className?: string;
+  popularProducts?: {
+    id: string;
+    slug: string;
+    name: string;
+    description: string;
+    price: number;
+    imagePath: string;
+  }[];
 }
 
 interface MenuItem {
@@ -41,7 +48,7 @@ interface MenuItem {
   spicy?: boolean;
 }
 
-export function MenuSection({ className = '' }: MenuSectionProps) {
+export function MenuSection({ className = '', popularProducts = [] }: MenuSectionProps) {
   const isMobile = useIsMobile();
   const shouldReduceMotion = useReducedMotion();
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false, align: 'center' });
@@ -71,42 +78,16 @@ export function MenuSection({ className = '' }: MenuSectionProps) {
     };
   }, [emblaApi, onSelect]);
 
-  // Sélection des plats populaires
-  const platsPopolaires: MenuItem[] = [
-    {
-      id: plats.bokits[1]?.id ?? '',
-      nom: plats.bokits[1]?.nom ?? '',
-      description: plats.bokits[1]?.description ?? '',
-      prix: plats.bokits[1]?.prix ?? 0,
-      image: plats.bokits[1]?.image,
-      popular: true,
-      spicy: true
-    },
-    {
-      id: plats.bokits[3]?.id ?? '',
-      nom: plats.bokits[3]?.nom ?? '',
-      description: plats.bokits[3]?.description ?? '',
-      prix: plats.bokits[3]?.prix ?? 0,
-      image: plats.bokits[3]?.image,
-      popular: true
-    },
-    {
-      id: plats.grillades[0]?.id ?? '',
-      nom: plats.grillades[0]?.nom ?? '',
-      description: plats.grillades[0]?.description ?? '',
-      prix: plats.grillades[0]?.prix ?? 0,
-      image: plats.grillades[0]?.image,
-      popular: true
-    },
-    {
-      id: plats.autres[0]?.id ?? '',
-      nom: plats.autres[0]?.nom ?? '',
-      description: plats.autres[0]?.description ?? '',
-      prix: plats.autres[0]?.prix ?? 0,
-      image: plats.autres[0]?.image,
-      popular: true
-    }
-  ].filter(item => item.id !== '');
+  // Map DB products to local MenuItem format
+  const platsPopolaires: MenuItem[] = popularProducts.map((p, i) => ({
+    id: p.id,
+    nom: p.name,
+    description: p.description,
+    prix: p.price,
+    image: p.imagePath || undefined,
+    popular: true,
+    spicy: i === 0, // First product (Bokit Poulet Boukané) marked as spicy
+  }));
 
   // ── Desktop Card ──────────────────────────────
   const renderMenuItem = (item: MenuItem) => (

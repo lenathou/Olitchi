@@ -1,20 +1,21 @@
-"use client";
-
 import { HeroSection } from "@/components/homepage/HeroSection";
 import { MenuSection } from "@/components/homepage/MenuSection";
 import { AboutSection } from "@/components/homepage/AboutSection";
 import { LocationSection } from "@/components/homepage/LocationSection";
 import { FAQSection } from "@/components/homepage/FAQSection";
 import { CTASection } from "@/components/homepage/CTASection";
+import { getPopularProducts } from "@/lib/products";
 
-export default function Home() {
+export default async function Home() {
+	const popularProducts = await getPopularProducts();
+
 	return (
 		<div>
 			{/* Section Hero - Point d'entrée principal */}
 			<HeroSection />
 
 			{/* Section Menu - Aperçu des spécialités */}
-			<MenuSection />
+			<MenuSection popularProducts={popularProducts} />
 
 			{/* Section À Propos - Histoire et valeurs */}
 			<AboutSection />

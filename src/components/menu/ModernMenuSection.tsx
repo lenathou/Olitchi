@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useIsMobile } from '@/lib/hooks/useMediaQuery';
-import { plats, petitesFaims, boissons } from '@/data/menu-data';
 import { ModernProductCard } from './ModernProductCard';
 import { MobileMenuTabs } from './MobileMenuTabs';
 import { DesktopMenuTabs } from './DesktopMenuTabs';
@@ -18,36 +17,25 @@ import {
   cardReveal,
 } from '@/lib/animations/menu/menu-animations';
 
-type MenuCategory = 'bokits' | 'grillades' | 'autres' | 'petitesFaims' | 'boissons';
-
-interface MenuData {
-  [key: string]: readonly {
-    id: string;
-    nom: string;
-    description?: string;
-    prix: number;
-    image?: string;
-  }[];
+interface ProductItem {
+  id: string;
+  slug: string;
+  name: string;
+  description: string;
+  price: number;
+  imagePath: string;
+  sortOrder: number;
+  isAvailable: boolean;
 }
 
-const menuData: MenuData = {
-  bokits: plats.bokits,
-  grillades: plats.grillades,
-  autres: plats.autres,
-  petitesFaims,
-  boissons,
-};
+interface ModernMenuSectionProps {
+  menuData: Record<string, ProductItem[]>;
+  categories: { id: string; label: string; emoji: string }[];
+}
 
-const categories = [
-  { id: 'bokits', label: 'Bokits', emoji: '🥪' },
-  { id: 'grillades', label: 'Grillades', emoji: '🔥' },
-  { id: 'autres', label: 'Autres', emoji: '🍽️' },
-  { id: 'petitesFaims', label: 'Petites Faims', emoji: '🍟' },
-  { id: 'boissons', label: 'Boissons', emoji: '🥤' },
-];
-
-export function ModernMenuSection() {
-  const [activeCategory, setActiveCategory] = useState<MenuCategory>('bokits');
+export function ModernMenuSection({ menuData, categories }: ModernMenuSectionProps) {
+  const categoryIds = categories.map(c => c.id);
+  const [activeCategory, setActiveCategory] = useState(categoryIds[0] || '');
   const isMobile = useIsMobile();
   const shouldReduceMotion = useReducedMotion();
 
@@ -135,7 +123,11 @@ export function ModernMenuSection() {
               variants={shouldReduceMotion ? undefined : cardReveal}
             >
               <ModernProductCard
-                {...item}
+                id={item.id}
+                nom={item.name}
+                description={item.description || undefined}
+                prix={item.price}
+                image={item.imagePath || undefined}
                 index={index}
                 isMobile={isMobile}
               />
