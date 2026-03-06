@@ -1,28 +1,9 @@
-## Error Type
-Console Error
-
-## Error Message
-`DialogContent` requires a `DialogTitle` for the component to be accessible for screen reader users.
-
-If you want to hide the `DialogTitle`, you can wrap it with our VisuallyHidden component.
-
-For more information, see https://radix-ui.com/primitives/docs/components/dialog
-
-
-    at SheetContent (src/components/ui/sheet.tsx:58:7)
-    at SheetPortal (src/components/ui/sheet.tsx:28:10)
-    at SheetContent (src/components/ui/sheet.tsx:56:5)
-    at MobileNavPremium (src/components/layout/MobileNavPremium.tsx:34:13)
-    at Header (src/components/layout/Header.tsx:67:5)
-    at RootLayout (src\app\layout.tsx:117:6)
-
-## Code Frame
-  56 |     <SheetPortal>
-  57 |       <SheetOverlay />
-> 58 |       <SheetPrimitive.Content
-     |       ^
-  59 |         data-slot="sheet-content"
-  60 |         className={cn(
-  61 |           "bg-background data-[state=open]:animate-in data-[state=closed]:animate-out fixed z-50 flex flex-col gap-4 shadow-lg transition ease-in-out data-[state=closed]:duration-300 data-[state=open]:duration-500",
-
-Next.js version: 16.1.6 (Turbopack)
+02:04:55.208 Failed to compile.
+02:04:55.210 Type error: Module '"@prisma/client"' has no exported member 'PrismaClient'.
+02:04:55.211 [0m[31m[1m>[22m[39m[90m 1 |[39m [36mimport[39m { [33mPrismaClient[39m } [36mfrom[39m [32m"@prisma/client"[39m[33m;[39m
+02:04:55.211  [90m   |[39m          [31m[1m^[22m[39m
+02:04:55.211  [90m 2 |[39m
+02:04:55.211  [90m 3 |[39m [36mconst[39m prisma [33m=[39m [36mnew[39m [33mPrismaClient[39m()[33m;[39m
+02:04:55.211  [90m 4 |[39m[0m
+02:04:55.297  ELIFECYCLE  Command failed with exit code 1.
+02:04:55.316 Error: Command "pnpm run build" exited with 1
