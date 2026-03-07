@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-
-const SESSION_COOKIE_NAME = "admin_session";
+import { SESSION_COOKIE_NAME } from "./lib/auth/constants";
 
 /**
  * Lightweight middleware: checks for presence of session cookie on /admin routes.

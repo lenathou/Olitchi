@@ -1,8 +1,8 @@
 import { cookies } from "next/headers";
 import { randomBytes, createHash } from "crypto";
 import { prisma } from "@/lib/prisma";
+import { SESSION_COOKIE_NAME } from "./constants";
 
-const SESSION_COOKIE_NAME = "admin_session";
 const SESSION_DURATION_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 
 /**

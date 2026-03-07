@@ -1,203 +1,145 @@
 Tu travailles sur le projet actuel Olitchi, que tu connais déjà dans son état réel.
 
-Les phases précédentes ont déjà été réalisées :
-- Phase 1 : séparation structurelle public / admin
-- Phase 2 : authentification admin et protection réelle de l’espace /admin
-- Phase 3 : CRUD admin des produits
-- Phase 4 : CRUD admin des catégories
+Les phases 1 à 5 ont déjà été intégrées :
+- séparation public / admin
+- authentification admin
+- CRUD produits
+- CRUD catégories
+- consolidation du catalogue admin
 
-Nous passons maintenant à la PHASE 5.
+Je veux maintenant une intervention ciblée de stabilisation finale.
+Ce n’est PAS une nouvelle phase fonctionnelle.
+C’est une passe de correction / harmonisation sur les points encore un peu fragiles avant de passer au prochain vrai chantier du produit.
 
-Objectif principal de la phase 5 :
-stabiliser, fiabiliser et finaliser le bloc “catalogue admin” afin qu’il soit réellement exploitable, cohérent et prêt pour la suite du projet.
+Objectif :
+corriger proprement les derniers points prioritaires du bloc “admin catalogue”, sans dériver vers auth user, panier, commande, paiement, ou refonte design large.
 
-Important :
-Cette phase n’a pas pour but d’ajouter un nouveau grand module.
-Elle sert à consolider tout ce qui concerne l’administration du catalogue :
-- produits
-- catégories
-- cohérence du menu public lié à ces données
-- gestion des cas limites
-- qualité générale de l’expérience admin
-
-Le cap reste le même :
-un admin doit pouvoir gérer le catalogue proprement et sans comportement fragile.
-
-Périmètre strict de la PHASE 5 :
-- revue complète du flux admin catalogue
-- stabilisation des CRUD produits et catégories
-- harmonisation validation / messages / erreurs
-- sécurisation des cas limites métier
-- vérification de la cohérence avec le front public
-- nettoyage léger de l’espace admin catalogue si nécessaire
+Périmètre strict :
+- feedback utilisateur (toasts)
+- validation serveur catégories
+- harmonisation des retours d’actions serveur
+- cohérence sortOrder
+- nettoyage de quelques points de qualité de code
+- centralisation d’une ou deux constantes techniques si pertinent
 
 Ne PAS implémenter maintenant :
+- auth user
+- espace client
 - panier
-- commande
+- commandes
 - paiement
-- espace client user
-- upload média avancé
-- gestion avancée de stock
-- variantes produit complexes
-- analytics
-- refonte visuelle large du dashboard
-- nouvelles fonctionnalités hors catalogue
+- upload média
+- refonte visuelle large
+- nouvelles fonctionnalités catalogue non demandées
 
-1. Audit global préalable
-Avant de coder, commence par faire un audit clair de l’existant sur :
-- le CRUD admin des produits
-- le CRUD admin des catégories
-- leurs validations respectives
-- la gestion des slugs
-- la gestion des suppressions
-- la cohérence des routes et pages admin
-- la consommation des produits/catégories côté public
+Je veux que tu commences par auditer rapidement les points suivants dans le code réel, puis que tu appliques uniquement les corrections réellement nécessaires.
 
-Je veux que tu identifies précisément :
-- ce qui est déjà propre
-- ce qui est fragile
-- ce qui manque pour considérer le catalogue admin comme “terminé proprement”
-- les éventuelles incohérences entre produits, catégories et front public
+1. Toaster / feedback utilisateur
+Vérifie si les appels à toast() utilisés dans les composants admin (produits, catégories, suppressions, formulaires) sont réellement reliés à un Toaster monté dans l’application.
 
-2. Objectif fonctionnel concret
-À l’issue de cette phase, je veux que le bloc catalogue admin permette de façon fiable :
-- de créer, modifier, supprimer des produits
-- de créer, modifier, supprimer des catégories dans des conditions sûres
-- de gérer correctement les champs utiles (nom, slug, description, prix, imagePath, sortOrder, isAvailable, emoji si applicable, catégorie)
-- de refléter correctement les changements côté public
-- d’éviter les erreurs métier évidentes ou les comportements incohérents
+Si ce n’est pas le cas :
+- monter proprement le composant Toaster au bon endroit global
+- sans casser la structure actuelle
+- sans duplication
 
-3. Cas limites à revoir impérativement
-Merci de vérifier et corriger proprement, si nécessaire, les points suivants :
+Attendu :
+les feedbacks toast doivent fonctionner réellement dans l’espace admin.
 
-Produits :
-- collision de slug à la création
-- collision de slug à la mise à jour / renommage
-- gestion cohérente de sortOrder
-- gestion propre de isAvailable
-- validation du prix
-- comportement avec imagePath vide ou absent
-- comportement si aucune catégorie n’existe
-- suppression produit avec feedback clair
+2. Validation serveur des catégories
+Je veux que le CRUD catégories atteigne le même niveau de robustesse que le CRUD produits.
 
-Catégories :
-- collision de slug
-- gestion cohérente de sortOrder
-- suppression refusée si des produits y sont rattachés
-- message clair si suppression impossible
-- cohérence du champ emoji
-- comportement si aucune catégorie n’existe
+Vérifie dans la couche serveur catégories si :
+- les données sont réellement revalidées côté serveur
+- le schéma Zod catégorie est bien utilisé côté serveur
+- les erreurs sont capturées proprement
 
-Global :
-- états vides propres sur les pages admin
-- messages d’erreur cohérents
-- retours succès cohérents
-- gestion correcte des redirections après création/édition/suppression
-- absence de régression sur le site public
+Si nécessaire :
+- appliquer une validation serveur stricte via Zod
+- harmoniser create / update / delete catégories
+- éviter de dépendre uniquement du front
 
-4. Cohérence base de données / règles métier
-Je veux que tu vérifies si les règles métier importantes sont suffisamment garanties :
-- au niveau applicatif
-- et, si pertinent, au niveau Prisma / DB
+3. Harmonisation des retours d’actions serveur
+Je veux une convention cohérente entre produits et catégories pour les Server Actions / helpers serveur.
+
+Vérifie si les actions retournent de manière homogène des objets du type :
+- { success: true, ... }
+- { success: false, error: "..." }
+ou une convention équivalente stable
+
+Si nécessaire :
+- harmoniser les retours de la couche catégories avec celle des produits
+- garder une structure simple, lisible et maintenable
+- éviter les variations inutiles de format selon les actions
+
+4. Cohérence de sortOrder
+Je veux que tu vérifies la logique réelle de sortOrder sur produits et catégories.
+
+Points à examiner :
+- logique à la création
+- logique si la valeur 0 est fournie
+- logique d’auto-positionnement en fin de liste
+- cohérence entre produits et catégories
+- comportement en cas de changement de catégorie pour un produit
+
+Je ne veux pas forcément une refonte lourde.
+Je veux une logique claire et cohérente.
+
+Si tu identifies une incohérence mineure mais réelle :
+- corrige-la proprement
+- ou, si le comportement actuel est volontaire et pertinent, rends-le cohérent et explicite dans le code
 
 Point particulièrement important :
-si une règle critique repose encore uniquement sur un garde-fou fragile alors qu’une contrainte plus sûre peut être mise en place proprement, signale-le et corrige-le si cela reste dans le périmètre raisonnable de la phase 5.
+vérifier le cas d’un produit déplacé vers une autre catégorie avec sortOrder = 0.
+Si nécessaire, corriger ce comportement pour qu’il reste logique métier.
 
-Exemple typique :
-- suppression de catégorie contenant des produits
-- unicité / stabilité des slugs
-- comportements relationnels dangereux
+5. Nettoyage de qualité de code
+Je veux un petit nettoyage ciblé, sans refactor large.
 
-Attention :
-ne lance pas une refonte Prisma inutile.
-Je veux uniquement les ajustements réellement utiles à la stabilisation du catalogue.
+À vérifier :
+- éventuels any faciles à remplacer proprement
+- duplications techniques évidentes
+- petites incohérences de nommage dans le bloc auth/catalogue
+- constantes dupliquées si elles sont critiques
 
-5. Harmonisation architecture / code
-Je veux que tu profites de cette phase pour harmoniser proprement le bloc catalogue admin :
-- conventions de validation identiques entre produits et catégories
-- conventions de server actions cohérentes
-- conventions de nommage cohérentes
-- logique serveur centralisée
-- éviter les duplications inutiles
-- éviter les divergences entre CRUD produit et CRUD catégorie
+Point spécifique :
+vérifie si le nom du cookie de session admin est dupliqué dans plusieurs fichiers.
+Si oui, centralise-le proprement dans une constante partagée adaptée à la structure du projet.
 
+6. Discipline de périmètre
 Important :
-pas de grand refactor cosmétique.
-Seulement les ajustements utiles pour une base propre et maintenable.
+reste strictement sur ces corrections ciblées.
+Ne lance pas un chantier de refactor global.
+Ne touche pas à des zones non concernées si ce n’est pas nécessaire.
+Ne commence pas le prochain bloc fonctionnel.
 
-6. Vérification du front public
-Je veux une vérification explicite de l’impact côté public :
-- affichage des catégories
-- affichage des produits
-- tri / ordre d’affichage si utilisé
-- respect de isAvailable si ce champ influence le menu public
-- absence de plantage si certaines données sont vides ou nouvellement créées depuis l’admin
+7. Vérifications attendues
+Je veux des vérifications concrètes après correction :
+- les toasts s’affichent réellement
+- les actions catégories sont robustes côté serveur
+- les retours d’actions sont cohérents
+- la logique sortOrder reste stable
+- le build passe
+- aucune régression visible sur l’admin catalogue
+- aucune régression visible sur le public
 
-Si des ajustements mineurs sont nécessaires côté public pour garder la cohérence avec les données administrées, tu peux les faire.
-Mais reste strictement dans le périmètre catalogue.
-
-7. UX admin minimale mais propre
-Merci d’harmoniser si nécessaire :
-- états vides
-- messages d’erreur
-- confirmations de suppression
-- toasts / feedback utilisateur
-- boutons retour / annulation si cela manque clairement
-
-Je ne veux pas une refonte design.
-Je veux juste une expérience admin propre, cohérente et non fragile.
-
-8. Vérifications attendues
-Je veux des vérifications concrètes de bout en bout :
-
-Produits :
-- création
-- édition
-- suppression
-- changement de disponibilité
-- comportement du slug
-- comportement du sortOrder
-
-Catégories :
-- création
-- édition
-- suppression d’une catégorie vide
-- refus de suppression d’une catégorie liée à des produits
-- comportement du slug
-- comportement du sortOrder
-
-Front public :
-- cohérence de l’affichage après modifications admin
-- absence de régression
-
-Technique :
-- build OK
-- cohérence Prisma si ajustement nécessaire
-- pas d’erreurs runtime évidentes
-- pas de régression sur l’auth admin
-
-9. Compte-rendu final
-À la fin, je veux un compte-rendu clair comprenant :
-- l’audit initial
-- les fragilités identifiées
-- les corrections réellement appliquées
-- les éventuels ajustements Prisma réalisés ou explicitement non nécessaires
-- les fichiers modifiés/créés
-- les cas limites désormais correctement gérés
-- les éventuels points restants mais non bloquants
-- la confirmation explicite que le bloc “catalogue admin” est stabilisé et prêt pour la suite du projet
+8. Compte-rendu final
+À la fin, je veux un compte-rendu clair avec :
+- les points réellement corrigés
+- les fichiers modifiés
+- les éventuels points audités mais finalement laissés en l’état avec justification
+- la confirmation que le bloc admin catalogue est désormais consolidé proprement
 
 Contraintes de qualité :
+- intervention ciblée
+- pas de sur-ingénierie
 - code propre
-- architecture maintenable
 - cohérence avec la stack actuelle
-- pas de bricolage temporaire
-- pas de fonctionnalité hors périmètre
-- pas de régression sur la partie publique
+- pas de dette technique ajoutée
+- pas de régression
 
 Avant d’appliquer les changements :
 commence par me présenter brièvement :
-1) ton audit du bloc catalogue admin actuel,
-2) les fragilités ou incohérences que tu comptes corriger,
+1) ton audit rapide sur ces points,
+2) ce que tu comptes réellement corriger,
 3) les fichiers que tu vas modifier,
-puis exécute la phase 5 méthodiquement.
+puis applique les corrections méthodiquement.

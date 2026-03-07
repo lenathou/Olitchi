@@ -62,7 +62,14 @@ export default async function AdminProductsPage() {
                                     </td>
                                 </tr>
                             ) : (
-                                products.map((product: any) => (
+                                products.map((product: {
+                                    id: string;
+                                    name: string;
+                                    price: number;
+                                    sortOrder: number;
+                                    isAvailable: boolean;
+                                    category: { emoji: string | null; name: string };
+                                }) => (
                                     <tr key={product.id} className="hover:bg-muted/30 transition-colors">
                                         <td className="px-6 py-4 font-medium text-foreground">
                                             {product.name}

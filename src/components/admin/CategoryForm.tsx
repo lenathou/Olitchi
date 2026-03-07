@@ -45,25 +45,31 @@ export function CategoryForm({ initialData }: CategoryFormProps) {
     const onSubmit = async (data: CategoryFormValues) => {
         setIsSubmitPending(true);
         try {
+            let result;
             if (initialData) {
-                await updateCategoryAction(initialData.id, {
+                result = await updateCategoryAction(initialData.id, {
                     name: data.name,
                     emoji: data.emoji || "",
                     sortOrder: data.sortOrder,
                 });
-                toast.success("Catégorie modifiée avec succès");
             } else {
-                await createCategoryAction({
+                result = await createCategoryAction({
                     name: data.name,
                     emoji: data.emoji || "",
                     sortOrder: data.sortOrder,
                 });
-                toast.success("Catégorie créée avec succès");
             }
-            router.push("/admin/categories");
+
+            if (result.success) {
+                toast.success(initialData ? "Catégorie modifiée avec succès" : "Catégorie créée avec succès");
+                router.push("/admin/categories");
+            } else {
+                toast.error(result.error || "Erreur lors de l'enregistrement");
+            }
+
         } catch (error) {
             console.error(error);
-            toast.error("Erreur lors de l'enregistrement de la catégorie");
+            toast.error("Erreur inattendue");
         } finally {
             setIsSubmitPending(false);
         }

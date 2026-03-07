@@ -146,11 +146,23 @@ export async function updateProductAction(
             slug = await generateUniqueSlug(validatedData.name, id);
         }
 
+        let finalSortOrder = validatedData.sortOrder;
+
+        if (finalSortOrder === 0) {
+            const maxOrderProduct = await prisma.product.findFirst({
+                where: { categoryId: validatedData.categoryId },
+                orderBy: { sortOrder: "desc" },
+                select: { sortOrder: true },
+            });
+            finalSortOrder = maxOrderProduct ? maxOrderProduct.sortOrder + 1 : 1;
+        }
+
         await prisma.product.update({
             where: { id },
             data: {
                 ...validatedData,
                 slug,
+                sortOrder: finalSortOrder,
             },
         });
 

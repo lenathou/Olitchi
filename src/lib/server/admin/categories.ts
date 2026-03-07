@@ -3,6 +3,8 @@
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/auth/permissions";
 import { revalidatePath } from "next/cache";
+import { categorySchema, CategoryFormValues } from "@/lib/validations/category";
+import { ActionResponse } from "./products";
 
 // Slugification logic identical to products
 function slugify(text: string): string {
@@ -63,68 +65,82 @@ export async function getAdminCategoryById(id: string) {
     });
 }
 
-export async function createCategoryAction(data: {
-    name: string;
-    emoji: string;
-    sortOrder: number;
-}) {
+export async function createCategoryAction(
+    data: CategoryFormValues
+): Promise<ActionResponse> {
     await requireAdmin();
 
-    const baseSlug = slugify(data.name);
-    const slug = await generateUniqueSlug(baseSlug);
+    try {
+        const validatedData = categorySchema.parse(data);
+        const baseSlug = slugify(validatedData.name);
+        const slug = await generateUniqueSlug(baseSlug);
 
-    let finalSortOrder = data.sortOrder;
+        let finalSortOrder = validatedData.sortOrder;
 
-    if (finalSortOrder === 0) {
-        const maxSortOrderCategory = await prisma.category.findFirst({
-            orderBy: { sortOrder: "desc" },
-            select: { sortOrder: true },
+        if (finalSortOrder === 0) {
+            const maxSortOrderCategory = await prisma.category.findFirst({
+                orderBy: { sortOrder: "desc" },
+                select: { sortOrder: true },
+            });
+            finalSortOrder = maxSortOrderCategory ? maxSortOrderCategory.sortOrder + 10 : 0;
+        }
+
+        await prisma.category.create({
+            data: {
+                ...validatedData,
+                slug,
+                sortOrder: finalSortOrder,
+            },
         });
-        finalSortOrder = maxSortOrderCategory ? maxSortOrderCategory.sortOrder + 10 : 0;
+
+        revalidatePath("/admin/categories");
+        revalidatePath("/menu");
+        return { success: true };
+    } catch (error) {
+        console.error("Failed to create category:", error);
+        return { success: false, error: "Impossible de créer la catégorie. Vérifiez les données." };
     }
-
-    await prisma.category.create({
-        data: {
-            ...data,
-            slug,
-            sortOrder: finalSortOrder,
-        },
-    });
-
-    revalidatePath("/admin/categories");
-    revalidatePath("/menu");
 }
 
 export async function updateCategoryAction(
     id: string,
-    data: { name: string; emoji: string; sortOrder: number }
-) {
+    data: CategoryFormValues
+): Promise<ActionResponse> {
     await requireAdmin();
 
-    const existingCategory = await prisma.category.findUnique({
-        where: { id },
-    });
+    try {
+        const validatedData = categorySchema.parse(data);
 
-    if (!existingCategory) {
-        throw new Error("Catégorie introuvable");
+        const existingCategory = await prisma.category.findUnique({
+            where: { id },
+        });
+
+        if (!existingCategory) {
+            return { success: false, error: "Catégorie introuvable." };
+        }
+
+        let slug = existingCategory.slug;
+        if (existingCategory.name !== validatedData.name) {
+            const baseSlug = slugify(validatedData.name);
+            slug = await generateUniqueSlug(baseSlug, id);
+        }
+
+        await prisma.category.update({
+            where: { id },
+            data: {
+                ...validatedData,
+                slug,
+            },
+        });
+
+        revalidatePath("/admin/categories");
+        revalidatePath("/menu");
+
+        return { success: true };
+    } catch (error) {
+        console.error("Failed to update category:", error);
+        return { success: false, error: "Impossible de mettre à jour la catégorie." };
     }
-
-    let slug = existingCategory.slug;
-    if (existingCategory.name !== data.name) {
-        const baseSlug = slugify(data.name);
-        slug = await generateUniqueSlug(baseSlug, id);
-    }
-
-    await prisma.category.update({
-        where: { id },
-        data: {
-            ...data,
-            slug,
-        },
-    });
-
-    revalidatePath("/admin/categories");
-    revalidatePath("/menu");
 }
 
 export async function deleteCategoryAction(id: string) {

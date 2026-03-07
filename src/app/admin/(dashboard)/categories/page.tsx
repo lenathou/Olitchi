@@ -55,7 +55,13 @@ export default async function AdminCategoriesPage() {
                                     </td>
                                 </tr>
                             ) : (
-                                categories.map((category: any) => (
+                                categories.map((category: {
+                                    id: string;
+                                    name: string;
+                                    emoji: string | null;
+                                    sortOrder: number;
+                                    _count: { products: number };
+                                }) => (
                                     <tr key={category.id} className="hover:bg-muted/30 transition-colors">
                                         <td className="px-6 py-4 font-medium text-foreground flex items-center gap-2">
                                             {category.emoji && <span className="text-xl">{category.emoji}</span>}
