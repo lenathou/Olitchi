@@ -115,8 +115,8 @@ export function MenuSection({ className = '', popularProducts = [] }: MenuSectio
           </div>
 
           {/* Image du plat */}
-          {item.image && (
-            <div className="relative h-48 w-full overflow-hidden shrink-0">
+          <div className="relative h-48 w-full overflow-hidden shrink-0 bg-secondary/10 flex items-center justify-center">
+            {item.image ? (
               <Image
                 src={item.image}
                 alt={item.nom}
@@ -124,8 +124,10 @@ export function MenuSection({ className = '', popularProducts = [] }: MenuSectio
                 className="object-contain group-hover:scale-105 transition-transform duration-500 relative z-0 drop-shadow-product"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
-            </div>
-          )}
+            ) : (
+              <ChefHat className="w-16 h-16 text-primary/20 stroke-[1.5]" />
+            )}
+          </div>
 
           {/* Contenu */}
           <div className="flex flex-col flex-1 p-5 gap-3">
@@ -207,15 +209,15 @@ export function MenuSection({ className = '', popularProducts = [] }: MenuSectio
           </Card>
 
           {/* Container d'image - positionné au dessus à gauche */}
-          {item.image && (
-            <div className="absolute left-0 top-0 w-40 h-44 z-10">
-              <div className="relative w-full h-full bg-secondary rounded-[2rem] shadow-xl overflow-hidden transform -rotate-1 border-1 border-white p-2">
-                {item.popular && (
-                  <Badge className="absolute top-3 left-3 z-20 bg-primary hover:bg-primary/90 text-white border-none shadow-md px-2.5 py-1 text-xs font-bold rounded-full">
-                    <Star className="w-3 h-3 mr-1 fill-current" />
-                    Populaire
-                  </Badge>
-                )}
+          <div className="absolute left-0 top-0 w-40 h-44 z-10">
+            <div className="relative w-full h-full bg-secondary rounded-[2rem] shadow-xl overflow-hidden transform -rotate-1 border-1 border-white p-2 flex items-center justify-center">
+              {item.popular && (
+                <Badge className="absolute top-3 left-3 z-20 bg-primary hover:bg-primary/90 text-white border-none shadow-md px-2.5 py-1 text-xs font-bold rounded-full">
+                  <Star className="w-3 h-3 mr-1 fill-current" />
+                  Populaire
+                </Badge>
+              )}
+              {item.image ? (
                 <div className="relative w-full h-full p-2">
                   <Image
                     src={item.image}
@@ -225,9 +227,11 @@ export function MenuSection({ className = '', popularProducts = [] }: MenuSectio
                     sizes="(max-width: 768px) 160px"
                   />
                 </div>
-              </div>
+              ) : (
+                <ChefHat className="w-12 h-12 text-primary/30 stroke-[1.5]" />
+              )}
             </div>
-          )}
+          </div>
         </motion.div>
       </div>
     );

@@ -1,6 +1,12 @@
 import { PrismaClient } from "@prisma/client";
+import { hash } from "bcryptjs";
 
 const prisma = new PrismaClient();
+
+// ─── Admin seed configuration ────────────────────
+// Change these values or use environment variables
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "admin@olitchi91.fr";
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "admin123!";
 
 const categories = [
     { slug: "bokits", name: "Bokits", emoji: "🥪", sortOrder: 1 },
@@ -53,8 +59,9 @@ const products: Record<string, Array<{
 };
 
 async function main() {
-    console.log("🌱 Seeding database...");
+    console.log("🌱 Seeding database...\n");
 
+    // ─── Categories & Products ───────────────────────
     for (const cat of categories) {
         const category = await prisma.category.upsert({
             where: { slug: cat.slug },
@@ -83,6 +90,28 @@ async function main() {
 
         console.log(`  ✅ ${cat.name}: ${categoryProducts.length} produits`);
     }
+
+    // ─── Admin User ──────────────────────────────────
+    const passwordHash = await hash(ADMIN_PASSWORD, 12);
+
+    await prisma.user.upsert({
+        where: { email: ADMIN_EMAIL },
+        update: {
+            passwordHash,
+            role: "ADMIN",
+            isActive: true,
+        },
+        create: {
+            email: ADMIN_EMAIL,
+            passwordHash,
+            role: "ADMIN",
+            isActive: true,
+        },
+    });
+
+    console.log(`\n  👤 Admin créé: ${ADMIN_EMAIL}`);
+    console.log(`  🔑 Mot de passe: ${ADMIN_PASSWORD}`);
+    console.log(`     ⚠️  Changez ce mot de passe en production !\n`);
 
     console.log("🎉 Seed terminé !");
 }

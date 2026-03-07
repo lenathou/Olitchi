@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Fraunces } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 import { cn } from "@/lib/utils";
-import NextImage from "next/image";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -28,7 +25,7 @@ export const metadata: Metadata = {
 		template: "%s | Olitchi91",
 	},
 	description:
-		"Découvrez Olitchi91, food truck gastronomique en Essonne. Une cuisine de rue fusion entre la Guadeloupe et la Côte d'Ivoire, à base d’ingrédients frais et locaux.",
+		"Découvrez Olitchi91, food truck gastronomique en Essonne. Une cuisine de rue fusion entre la Guadeloupe et la Côte d'Ivoire, à base d'ingrédients frais et locaux.",
 	keywords: [
 		"food truck",
 		"Essonne",
@@ -56,7 +53,7 @@ export const metadata: Metadata = {
 	openGraph: {
 		title: "olitchi91 - Food Truck Gastronomique en Essonne",
 		description:
-			"Découvrez notre cuisine afro-antillaise à base de produits frais, fusion entre Guadeloupe et Côte d’Ivoire. Rendez-vous sur les marchés d’Île-de-France.",
+			"Découvrez notre cuisine afro-antillaise à base de produits frais, fusion entre Guadeloupe et Côte d'Ivoire. Rendez-vous sur les marchés d'Île-de-France.",
 		url: "https://olitchi91.fr",
 		siteName: "olitchi91",
 		locale: "fr_FR",
@@ -101,27 +98,7 @@ export default function RootLayout({
 					"antialiased"
 				)}
 			>
-				{/* Global Background Image */}
-				<div className="fixed inset-0 -z-50 w-full h-full">
-					<NextImage
-						src="/images/hero-bg-test.webp"
-						alt=""
-						fill
-						className="object-cover"
-						quality={90}
-						priority
-					/>
-				</div>
-
-				<header>
-					<Header />
-				</header>
-				<main role="main" className="">
-					{children}
-				</main>
-				<footer>
-					<Footer />
-				</footer>
+				{children}
 			</body>
 		</html>
 	);

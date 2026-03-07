@@ -46,7 +46,6 @@
 /* Palette Ô Litchy — Food Premium Minimal (papier + sable + orange chaud) */
 :root {
   /* Rayons — boutons “pill” doux comme sur la hero */
-  --radius: 999px;
 
   /* Background / Text — style “papier” premium */
   --background: #f7f2ea;

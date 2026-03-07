@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { Plus, Minus } from 'lucide-react';
+import { Plus, Minus, ChefHat } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 
@@ -42,8 +42,8 @@ export function ModernProductCard({
       >
         {/* Image - Rounded (Left) */}
         <div className="relative w-28 h-28 shrink-0">
-          <div className="absolute inset-0 rounded-2xl overflow-hidden">
-            {image && (
+          <div className="absolute inset-0 rounded-2xl overflow-hidden bg-secondary/20 flex items-center justify-center">
+            {image ? (
               <Image
                 src={image}
                 alt={nom}
@@ -51,6 +51,8 @@ export function ModernProductCard({
                 className="object-contain"
                 sizes="112px"
               />
+            ) : (
+              <ChefHat className="w-8 h-8 text-primary/30 stroke-[1.5]" />
             )}
           </div>
         </div>
@@ -120,8 +122,8 @@ export function ModernProductCard({
       className="group h-full flex flex-col overflow-hidden hover:-translate-y-2 transition-all duration-500 relative rounded-3xl"
     >
       {/* Image Container */}
-      <div className="relative aspect-[4/3] overflow-hidden rounded-t-3xl">
-        {image && (
+      <div className="relative aspect-[4/3] overflow-hidden rounded-t-3xl bg-secondary/10 flex items-center justify-center">
+        {image ? (
           <Image
             src={image}
             alt={nom}
@@ -129,6 +131,8 @@ export function ModernProductCard({
             className="object-contain group-hover:scale-110 transition-transform duration-700 p-4"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
           />
+        ) : (
+          <ChefHat className="w-16 h-16 text-primary/20 stroke-[1.5]" />
         )}
       </div>
 
