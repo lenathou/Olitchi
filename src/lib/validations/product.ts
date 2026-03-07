@@ -7,16 +7,25 @@ export const productSchema = z.object({
         (val) => {
             if (typeof val === "string") {
                 const parsed = parseFloat(val.replace(",", "."));
-                return isNaN(parsed) ? val : parsed;
+                return isNaN(parsed) ? 0 : parsed;
             }
-            return val;
+            return Number(val) || 0;
         },
         z.number().min(0, "Le prix ne peut pas être négatif")
     ),
     description: z.string().optional().default(""),
     imagePath: z.string().optional().default(""),
     isAvailable: z.boolean().default(true),
-    sortOrder: z.coerce.number().int().default(0),
+    sortOrder: z.preprocess(
+        (val) => {
+            if (typeof val === "string") {
+                const parsed = parseInt(val, 10);
+                return isNaN(parsed) ? 0 : parsed;
+            }
+            return Number(val) || 0;
+        },
+        z.number().int()
+    ).default(0),
 });
 
 export type ProductFormValues = z.infer<typeof productSchema>;

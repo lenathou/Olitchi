@@ -2,6 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 import { productSchema, ProductFormValues } from "@/lib/validations/product";
 import { createProductAction, updateProductAction } from "@/lib/server/admin/products";
 import { useRouter } from "next/navigation";
@@ -40,20 +41,20 @@ interface ProductFormProps {
     initialData?: ProductFormValues & { id?: string };
 }
 
-export function ProductForm({ categories, initialData }: ProductFormProps) {
+export function ProductForm({ categories, initialData: product }: ProductFormProps) {
     const router = useRouter();
     const [isSubmitPending, setIsSubmitPending] = useState(false);
 
-    const form = useForm<ProductFormValues>({
-        resolver: zodResolver(productSchema) as any,
-        defaultValues: initialData || {
-            name: "",
-            description: "",
-            price: 0,
-            imagePath: "",
-            categoryId: "",
-            isAvailable: true,
-            sortOrder: 0,
+    const form = useForm<z.input<typeof productSchema>, any, z.infer<typeof productSchema>>({
+        resolver: zodResolver(productSchema),
+        defaultValues: {
+            name: product?.name || "",
+            categoryId: product?.categoryId || "",
+            price: product?.price || 0,
+            description: product?.description || "",
+            imagePath: product?.imagePath || "",
+            isAvailable: product ? product.isAvailable : true,
+            sortOrder: product?.sortOrder || 0,
         },
     });
 
@@ -61,13 +62,13 @@ export function ProductForm({ categories, initialData }: ProductFormProps) {
         setIsSubmitPending(true);
 
         try {
-            const response = initialData?.id
-                ? await updateProductAction(initialData.id, data)
+            const response = product?.id
+                ? await updateProductAction(product.id, data)
                 : await createProductAction(data);
 
             if (response.success) {
                 toast.success(
-                    initialData?.id
+                    product?.id
                         ? "Produit mis à jour avec succès"
                         : "Produit créé avec succès"
                 );
@@ -140,7 +141,14 @@ export function ProductForm({ categories, initialData }: ProductFormProps) {
                             <FormItem className="col-span-2 md:col-span-1">
                                 <FormLabel>Prix (€)</FormLabel>
                                 <FormControl>
-                                    <Input type="text" inputMode="decimal" placeholder="0.00" {...field} />
+                                    <Input
+                                        type="number"
+                                        step="0.01"
+                                        placeholder="0.00"
+                                        {...field}
+                                        value={field.value as number}
+                                        onChange={(e) => field.onChange(Number(e.target.value))}
+                                    />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -155,7 +163,14 @@ export function ProductForm({ categories, initialData }: ProductFormProps) {
                             <FormItem className="col-span-2 md:col-span-1">
                                 <FormLabel>Ordre d&apos;affichage</FormLabel>
                                 <FormControl>
-                                    <Input type="number" step="1" {...field} />
+                                    <Input
+                                        type="number"
+                                        step="1"
+                                        placeholder="0"
+                                        {...field}
+                                        value={field.value as number}
+                                        onChange={(e) => field.onChange(e.target.value === '' ? '' : Number(e.target.value))}
+                                    />
                                 </FormControl>
                                 <FormDescription>
                                     0 = placement auto à la fin de la catégorie.
@@ -231,17 +246,11 @@ export function ProductForm({ categories, initialData }: ProductFormProps) {
                 </div>
 
                 <div className="flex gap-4 pt-4">
-                    <Button
-                        type="button"
-                        variant="outline"
-                        onClick={() => router.push("/admin/produits")}
-                        disabled={isSubmitPending}
-                    >
+                    <Button type="button" variant="outline" onClick={() => router.back()} disabled={isSubmitPending}>
                         Annuler
                     </Button>
                     <Button type="submit" disabled={isSubmitPending}>
-                        {isSubmitPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                        {initialData?.id ? "Mettre à jour" : "Créer le produit"}
+                        {isSubmitPending ? "Enregistrement..." : product?.id ? "Mettre à jour" : "Créer le produit"}
                     </Button>
                 </div>
             </form>

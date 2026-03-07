@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 import { CategoryFormValues, categorySchema } from "@/lib/validations/category";
 import { createCategoryAction, updateCategoryAction } from "@/lib/server/admin/categories";
 import { Button } from "@/components/ui/button";
@@ -33,12 +34,12 @@ export function CategoryForm({ initialData }: CategoryFormProps) {
     const router = useRouter();
     const [isSubmitPending, setIsSubmitPending] = useState(false);
 
-    const form = useForm<CategoryFormValues>({
-        resolver: zodResolver(categorySchema) as any,
-        defaultValues: initialData || {
-            name: "",
-            emoji: "",
-            sortOrder: 0,
+    const form = useForm<z.input<typeof categorySchema>, any, z.infer<typeof categorySchema>>({
+        resolver: zodResolver(categorySchema),
+        defaultValues: {
+            name: initialData?.name || "",
+            emoji: initialData?.emoji || "",
+            sortOrder: initialData?.sortOrder || 0,
         },
     });
 
@@ -60,7 +61,7 @@ export function CategoryForm({ initialData }: CategoryFormProps) {
                 });
             }
 
-            if (result.success) {
+            if (result && result.success) {
                 toast.success(initialData ? "Catégorie modifiée avec succès" : "Catégorie créée avec succès");
                 router.push("/admin/categories");
             } else {
@@ -119,6 +120,7 @@ export function CategoryForm({ initialData }: CategoryFormProps) {
                                         type="number"
                                         placeholder="0"
                                         {...field}
+                                        value={field.value as number}
                                         onChange={(e) => field.onChange(e.target.value === '' ? '' : Number(e.target.value))}
                                     />
                                 </FormControl>
