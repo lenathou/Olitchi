@@ -3,23 +3,26 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { MapPin } from "lucide-react";
+import { MapPin, ShoppingBag } from "lucide-react";
 import Link from "next/link";
 import { mainNavigation } from "@/constants/navigation";
 import { MobileNavPremium } from "./MobileNavPremium";
 
+import { useCartStore, selectCartTotalItems } from "@/store/cartStore";
+
 export default function Header() {
 	const [isScrolled, setIsScrolled] = useState(false);
+	const [mounted, setMounted] = useState(false);
 	const isScrolledRef = useRef(false);
 	const rafId = useRef<number | null>(null);
+	const totalItems = useCartStore(selectCartTotalItems);
 
 	useEffect(() => {
+		setMounted(true);
 		const handleScroll = () => {
-			// Throttle via rAF — une seule exécution par frame
 			if (rafId.current !== null) return;
 			rafId.current = requestAnimationFrame(() => {
 				const scrolled = window.scrollY > 20;
-				// Guard : ne setState que si la valeur change
 				if (scrolled !== isScrolledRef.current) {
 					isScrolledRef.current = scrolled;
 					setIsScrolled(scrolled);
@@ -56,10 +59,10 @@ export default function Header() {
 					/>
 				</Link>
 
-				{/* Desktop Right Side: Nav + CTA */}
-				<div className="hidden md:flex items-center gap-8">
-					{/* Navigation Links */}
-					<div className="flex space-x-8">
+				{/* Right Side: Links + Cart + CTA + Mobile Toggle */}
+				<div className="flex items-center gap-2 md:gap-8">
+					{/* Navigation Links (Desktop) */}
+					<div className="hidden md:flex space-x-8">
 						{mainNavigation.map((item) => (
 							<Link
 								key={item.href}
@@ -72,17 +75,32 @@ export default function Header() {
 						))}
 					</div>
 
-					{/* CTA Button */}
-					<Button asChild>
-						<Link href="/localisation-horaires">
-							<MapPin className="w-4 h-4 mr-2" />
-							Nous Trouver
+					{/* Actions (Cart & CTA) */}
+					<div className="flex items-center gap-2 md:gap-4">
+						{/* Cart Indicator */}
+						<Link href="/panier" className={`relative p-2 transition-colors hover:text-primary ${isScrolled ? "text-foreground" : "text-gray-800"}`}>
+							<ShoppingBag className="w-6 h-6" />
+							{mounted && totalItems > 0 && (
+								<span className="absolute top-0 right-0 translate-x-1/4 -translate-y-1/4 bg-primary text-white text-[10px] font-bold px-[5px] py-[2px] rounded-full min-w-[20px] text-center border-2 border-background shadow-sm">
+									{totalItems}
+								</span>
+							)}
 						</Link>
-					</Button>
-				</div>
 
-				{/* Mobile Navigation */}
-				<MobileNavPremium />
+						{/* CTA Button (Desktop) */}
+						<div className="hidden md:block">
+							<Button asChild>
+								<Link href="/localisation-horaires">
+									<MapPin className="w-4 h-4 mr-2" />
+									Nous Trouver
+								</Link>
+							</Button>
+						</div>
+
+						{/* Mobile Navigation Toggle (Mobile) */}
+						<MobileNavPremium />
+					</div>
+				</div>
 			</nav>
 		</header>
 	);

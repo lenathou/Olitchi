@@ -1,10 +1,11 @@
 'use client';
 
-import { useState } from 'react';
 import Image from 'next/image';
 import { Plus, Minus, ChefHat } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { useCartStore, selectItemQuantity } from '@/store/cartStore';
+import { CartState } from '@/types/cart';
 
 interface ModernProductCardProps {
   id: string;
@@ -17,6 +18,7 @@ interface ModernProductCardProps {
 }
 
 export function ModernProductCard({
+  id,
   nom,
   description,
   prix,
@@ -24,14 +26,30 @@ export function ModernProductCard({
   index,
   isMobile
 }: ModernProductCardProps) {
-  const [quantity, setQuantity] = useState(0);
+  const quantity = useCartStore(selectItemQuantity(id));
+  const addItem = useCartStore((state: CartState) => state.addItem);
+  const updateItemQuantity = useCartStore((state: CartState) => state.updateItemQuantity);
+  const removeItem = useCartStore((state: CartState) => state.removeItem);
 
   const handleAddToCart = () => {
-    setQuantity(prev => prev + 1);
+    if (quantity === 0) {
+      addItem({
+        productId: id,
+        name: nom,
+        price: prix,
+        imagePath: image,
+      });
+    } else {
+      updateItemQuantity(id, quantity + 1);
+    }
   };
 
   const handleRemoveFromCart = () => {
-    setQuantity(prev => Math.max(0, prev - 1));
+    if (quantity > 1) {
+      updateItemQuantity(id, quantity - 1);
+    } else {
+      removeItem(id); // Automatically handled if quantity drops to 0, but explicit here
+    }
   };
 
   if (isMobile) {
