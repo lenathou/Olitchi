@@ -97,9 +97,11 @@ export default function CartPage() {
                                 </div>
                             </div>
 
-                            <Button size="lg" className="w-full rounded-2xl h-14 text-base font-bold shadow-lg shadow-primary/20 relative overflow-hidden group">
-                                <span className="relative z-10 transition-transform duration-300 group-hover:-translate-y-1">Continuer vers la commande</span>
-                                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
+                            <Button asChild size="lg" className="w-full rounded-2xl h-14 text-base font-bold shadow-lg shadow-primary/20 relative overflow-hidden group">
+                                <Link href="/checkout">
+                                    <span className="relative z-10 transition-transform duration-300 group-hover:-translate-y-1">Continuer vers la commande</span>
+                                    <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
+                                </Link>
                             </Button>
                             <p className="text-xs text-center text-muted-foreground mt-4 font-medium">
                                 La validation de commande sera disponible prochainement !
